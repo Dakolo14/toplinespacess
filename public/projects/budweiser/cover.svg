@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+<rect width="1200" height="900" fill="#efebe3"/>
+<path d="M0 0V900M50 0V900M100 0V900M150 0V900M200 0V900M250 0V900M300 0V900M350 0V900M400 0V900M450 0V900M500 0V900M550 0V900M600 0V900M650 0V900M700 0V900M750 0V900M800 0V900M850 0V900M900 0V900M950 0V900M1000 0V900M1050 0V900M1100 0V900M1150 0V900M1200 0V900M0 0H1200M0 50H1200M0 100H1200M0 150H1200M0 200H1200M0 250H1200M0 300H1200M0 350H1200M0 400H1200M0 450H1200M0 500H1200M0 550H1200M0 600H1200M0 650H1200M0 700H1200M0 750H1200M0 800H1200M0 850H1200M0 900H1200" stroke="#1d1b18" stroke-opacity=".05" stroke-width="1"/>
+<rect x="240" y="190" width="720" height="110" fill="#0b7a4b" stroke="#1d1b18" stroke-width="3"/><text x="600" y="262" text-anchor="middle" font-family="Inter,Arial" font-weight="700" font-size="44" fill="#efebe3" letter-spacing="-1">YOUR BRAND</text><path d="M260 300V710M940 300V710" fill="none" stroke="#1d1b18" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /><rect x="280" y="310" width="640" height="260" fill="#e6e1d6" stroke="#1d1b18" stroke-width="2"/><rect x="320" y="340" width="160" height="30" fill="none" stroke="#1d1b18" stroke-width="2"/><rect x="320" y="400" width="160" height="30" fill="none" stroke="#1d1b18" stroke-width="2"/><rect x="520" y="340" width="160" height="30" fill="none" stroke="#1d1b18" stroke-width="2"/><rect x="520" y="400" width="160" height="30" fill="none" stroke="#1d1b18" stroke-width="2"/><rect x="720" y="340" width="160" height="30" fill="none" stroke="#1d1b18" stroke-width="2"/><rect x="720" y="400" width="160" height="30" fill="none" stroke="#1d1b18" stroke-width="2"/><rect x="380" y="570" width="440" height="140" fill="#efebe3" stroke="#1d1b18" stroke-width="3"/><rect x="380" y="570" width="440" height="22" fill="#1d1b18"/>
+<path d="M40 710H1160" fill="none" stroke="#1d1b18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M40 736h1120" fill="none" stroke="#1d1b18" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 8"/>
+<g font-family="Inter,Helvetica,Arial,sans-serif" fill="#1d1b18">
+<text x="40" y="808" font-size="40" font-weight="700" letter-spacing="-1.6">Budweiser</text>
+<text x="40" y="844" font-size="20" font-weight="500" opacity=".55">Brand activations · Photos coming soon</text>
+<text x="1160" y="808" font-size="40" font-weight="700" text-anchor="end" fill="#0b7a4b">No. 06</text>
+<text x="1160" y="844" font-size="20" font-weight="500" text-anchor="end" opacity=".55">TopLine Spaces · Lagos</text>
+</g>
+</svg>

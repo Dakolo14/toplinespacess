@@ -47,10 +47,11 @@ export function computeLayout(
       if (h > H * 0.56) { h = H * 0.56; w = h * r; }
       return { w, h };
     }
-    if (r < 0.95) return { w: H * 0.67 * r, h: H * 0.67 };
-    if (r < 1.05) return { w: H * 0.6, h: H * 0.6 };
-    let w = Math.min(W * 0.58, H * 0.7 * r), h = w / r;
-    if (h > H * 0.67) { h = H * 0.67; w = h * r; }
+    // works stand on posts, so they are smaller than wall-hung frames and leave the floor visible below
+    if (r < 0.95) return { w: H * 0.54 * r, h: H * 0.54 };
+    if (r < 1.05) return { w: H * 0.48, h: H * 0.48 };
+    let w = Math.min(W * 0.5, H * 0.6 * r), h = w / r;
+    if (h > H * 0.46) { h = H * 0.46; w = h * r; }
     return { w, h };
   };
 
@@ -63,7 +64,7 @@ export function computeLayout(
 
   const items: Item[] = [];
   const wallLen: [number, number, number] = [0, 0, 0];
-  const cy = -H * 0.035;
+  const cy = phone ? -H * 0.035 : -H * 0.08;
   const corner = d0 + gap;
 
   // left wall starts right after the entrance

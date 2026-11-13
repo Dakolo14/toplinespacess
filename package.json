@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync-projects": "node scripts/sync-projects.mjs",
+    "placeholders": "node scripts/make-placeholders.mjs"
   },
   "dependencies": {
     "framer-motion": "^11.18.2",

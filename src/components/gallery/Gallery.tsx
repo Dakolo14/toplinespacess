@@ -409,8 +409,7 @@ function Room({
         const n = niche(it);
         const depth = it.niche ? nicheDepth : 0;
         const top = it.cy - it.h / 2;
-        const railTop = it.niche ? it.cy - n.h / 2 : L.railY;
-        return (
+                return (
           <div key={w.slug} className="g-wall" data-item={idx} style={{ transform: wallXform(L, it.wall, it.u, 0, -depth) }}>
             {it.niche && (
               <>
@@ -423,22 +422,27 @@ function Room({
               </>
             )}
             <div className="g-halo" style={{ left: px(-it.w * 0.95), top: px(it.cy - it.h * 1.05), width: px(it.w * 1.9), height: px(it.h * 2.1) }} />
-            {[0.16, 0.84].map((f) => (
-              <div key={f} className="g-wire" style={{ left: px(-it.w / 2 + it.w * f), top: px(railTop), height: px(Math.max(0, top - L.frameT - railTop)) }} />
+            {/* free-standing exhibition stand: two posts down to the floor (works in a niche sit on a ledge) */}
+            {!it.niche && [0.14, 0.86].map((f) => (
+              <div key={f} className="g-post" style={{ left: px(-it.w / 2 + it.w * f - 3), top: px(top + it.h), height: px(L.floorY - top - it.h) }} />
             ))}
+            {!it.niche && <div className="g-foot" style={{ left: px(-it.w * 0.46), width: px(it.w * 0.92), top: px(L.floorY - 6) }} />}
+            {it.niche && <div className="g-ledge" style={{ left: px(-n.w / 2 + depth), width: px(n.w - depth * 2), top: px(top + it.h + L.frameT) }} />}
             <div className="g-shadow" style={{ left: px(-it.w / 2), top: px(top), width: px(it.w), height: px(it.h) }} />
             <button
               className="g-frame"
               aria-label={`Open ${w.title}`}
-              style={{ left: px(-it.w / 2), top: px(top), width: px(it.w), height: px(it.h), boxShadow: `0 0 0 ${px(L.frameT)} var(--ink)` }}
+              style={{ left: px(-it.w / 2), top: px(top), width: px(it.w), height: px(it.h), boxShadow: `0 0 0 ${px(L.frameT)} var(--panel)` }}
               onClick={(e) => onOpen(w, e.currentTarget)}
             >
               <img src={w.image} alt="" draggable={false} decoding="async" />
               {w.video && <video data-item-video={idx} src={w.video} muted loop playsInline preload="none" />}
             </button>
-            <div className="g-cap" style={{ left: px(-it.w / 2 - L.frameT), top: px(top + it.h + L.frameT + 12), width: px(it.w) }}>
+            {/* number tab clipped to the top corner of the panel */}
+            <div className="g-tab" style={{ left: px(it.w / 2 - L.frameT - 2), top: px(top - L.frameT) }}>{w.no}</div>
+            <div className="g-cap" style={{ left: px(-it.w / 2 - L.frameT), top: px(top + it.h + L.frameT + 12), width: px(it.w + L.frameT * 2) }}>
               <span className="ln"><span style={{ transitionDelay: "0.08s" }}>{w.title}</span></span>
-              <span className="ln g-cap-sub"><span style={{ transitionDelay: "0.14s" }}>{w.services}</span></span>
+              <span className="ln g-cap-sub"><span style={{ transitionDelay: "0.14s" }}>{w.services}{w.year ? `, ${w.year}` : ""}</span></span>
             </div>
           </div>
         );

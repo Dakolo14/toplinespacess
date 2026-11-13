@@ -26,6 +26,7 @@ export default function Nav() {
         <Link href="/" className="nav-logo" aria-label={`${site.name} home`}>
           <Logo />
         </Link>
+        <LagosTime />
         <button className="nav-burger" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen((o) => !o)}>
           <i />
           <i />
@@ -90,6 +91,22 @@ export default function Nav() {
   );
 }
 
+// Small live clock: the studio's time in Lagos (WAT).
+function LagosTime() {
+  const [t, setT] = useState("");
+  useEffect(() => {
+    const f = () => setT(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: site.timeZone }).format(new Date()));
+    f();
+    const id = setInterval(f, 15000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <span className="nav-time" aria-label={`Time in ${site.city}`}>
+      <i />{site.city} <b suppressHydrationWarning>{t || "--:--"}</b> WAT
+    </span>
+  );
+}
+
 function fade(delay: number) {
   return {
     initial: { opacity: 0, y: 8 },
@@ -102,6 +119,11 @@ const css = `
 .nav{position:fixed;z-index:1000;top:16px;left:50%;transform:translateX(-50%);width:min(720px,calc(100% - 32px));height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 18px 0 19px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);transition:background .5s var(--ease-io),box-shadow .5s var(--ease-io)}
 .nav[data-open]{background:#e4e0e0;box-shadow:inset 0 0 0 1px transparent}
 .nav-logo{font-size:22px;font-weight:600;letter-spacing:-.06em;line-height:1}
+.nav-time{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink-3);white-space:nowrap}
+.nav-time b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.nav-time i{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:nav-pulse 2.4s ease-in-out infinite}
+@keyframes nav-pulse{50%{opacity:.25}}
+@media (max-width:420px){.nav-time{display:none}}
 .nav-burger{width:36px;height:36px;display:grid;place-items:center;position:relative;margin-right:-8px}
 .nav-burger i{position:absolute;left:10px;width:16px;height:2px;background:var(--ink);transition:transform .5s var(--ease-out)}
 .nav-burger i:first-child{transform:translateY(-3.5px)}

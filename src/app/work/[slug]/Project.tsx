@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { Work } from "@/lib/content";
 import { releaseZoom, zoomToPage } from "@/lib/zoom";
 import { Fade, Lines } from "@/components/ui/Reveal";
@@ -15,11 +15,14 @@ export default function Project({ work, next }: { work: Work; next: Work }) {
   const [at, setAt] = useState(2);
   useEffect(() => { releaseZoom(); }, []);
   useEffect(() => {
-    const id = setInterval(() => setAt((a) => (a + 1) % FRAMES), 2600);
+    const id = setInterval(() => setAt((a) => a + 1), 2600);
     return () => clearInterval(id);
   }, []);
   const close = () => (window.history.length > 1 ? router.back() : router.push("/"));
   const pos = (i: number) => `${(i / (FRAMES - 1)) * 100}% ${50 + Math.sin(i) * 20}%`;
+  const real = work.images.length > 1; // real photo set: the strip steps through photos instead of panning one image
+  const drawing = work.image.endsWith(".svg"); // placeholder elevation drawing until photos arrive
+  const frames = real ? work.images.length : FRAMES;
 
   return (
     <main className="pj">
@@ -29,10 +32,10 @@ export default function Project({ work, next }: { work: Work; next: Work }) {
       <div className="pj-text">
         <Lines as="h1" className="pj-title display" lines={[work.title]} />
         <Fade delay={0.15} className="pj-meta">
-          <span className="pill">{work.services}</span> for <span className="pill">{work.client}</span> in <span className="pill">{work.year}</span>
+          <span className="pill pill-no">No. {work.no}</span> <span className="pill">{work.services}</span> for <span className="pill">{work.client}</span> in <span className="pill">{work.location}{work.year ? `, ${work.year}` : ""}</span>
         </Fade>
-        <Fade delay={0.25}><p className="pj-lead">{work.body.paragraphs[0]}</p></Fade>
-        <Fade delay={0.3}><a className="pj-link" href="#">Visit the live site</a></Fade>
+        <Fade delay={0.25}><p className="pj-lead">{work.blurb}</p></Fade>
+        <Fade delay={0.3}><Link className="pj-link" href="/contact">Start a build like this</Link></Fade>
         <section className="pj-body">
           <Lines as="h2" lines={[work.body.heading]} />
           {work.body.paragraphs.map((p, i) => <Fade key={i} delay={0.05 * i}><p>{p}</p></Fade>)}
@@ -42,7 +45,6 @@ export default function Project({ work, next }: { work: Work; next: Work }) {
               <cite>{work.body.quote.by}</cite>
             </Fade>
           )}
-          <Fade><a className="pj-link" href="#">Read the whole story</a></Fade>
         </section>
         <div className="pj-next">
           <span className="label">Next</span>
@@ -50,28 +52,35 @@ export default function Project({ work, next }: { work: Work; next: Work }) {
             const img = (e.currentTarget as HTMLElement).querySelector("img");
             if (img) { e.preventDefault(); zoomToPage(img, `/work/${next.slug}`, router); }
           }}>
-            <i className="w l" /><i className="w r" />
             <img src={next.image} alt="" />
+            <i className="p l" /><i className="p r" /><em>{next.no}</em>
             <strong>{next.title}</strong>
           </Link>
         </div>
       </div>
       <div className="pj-media">
         <motion.div className="pj-screen" initial={{ opacity: 0, scale: 1.02 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, ease: EASE, delay: 0.2 }}>
-          <img src={work.image} alt={work.title} style={{ objectPosition: pos(at), transition: "object-position 2.4s cubic-bezier(.65,0,.35,1)" }} />
+          {real ? (
+            <AnimatePresence initial={false}>
+              <motion.img key={at % frames} src={work.images[at % frames]} alt={work.title} style={{ position: "absolute", inset: 0, transform: "none" }}
+                initial={{ clipPath: "inset(0 0 0 100%)" }} animate={{ clipPath: "inset(0 0 0 0%)" }} exit={{ opacity: 1 }} transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1] }} />
+            </AnimatePresence>
+          ) : (
+            <img src={work.image} alt={work.title} data-drawing={drawing || undefined} style={drawing ? undefined : { objectPosition: pos(at % frames), transition: "object-position 2.4s cubic-bezier(.65,0,.35,1)" }} />
+          )}
         </motion.div>
         <div className="pj-bar">
-          <span>0:{String(at * 2).padStart(2, "0")} / 0:{String(FRAMES * 2).padStart(2, "0")}</span>
-          <span className="pj-ctrl">1× <b>◐</b> <b>⤢</b></span>
+          <span>{real ? `Photo ${(at % frames) + 1} of ${frames}` : drawing ? "Set elevation, photos coming soon" : `0:${String((at % frames) * 2).padStart(2, "0")} / 0:${String(FRAMES * 2).padStart(2, "0")}`}</span>
+          <span className="pj-ctrl">{work.location}</span>
         </div>
-        <div className="pj-strip">
-          {Array.from({ length: FRAMES }).map((_, i) => (
-            <button key={i} data-on={i === at || undefined} onClick={() => setAt(i)}>
-              <span style={{ backgroundImage: `url(${work.image})`, backgroundPosition: pos(i) }} />
-              <em>0:{String(i * 2).padStart(2, "0")}</em>
+        {!drawing && <div className="pj-strip">
+          {Array.from({ length: frames }).map((_, i) => (
+            <button key={i} data-on={i === at % frames || undefined} onClick={() => setAt(i)}>
+              <span style={real ? { backgroundImage: `url(${work.images[i]})`, backgroundSize: "cover", backgroundPosition: "center" } : { backgroundImage: `url(${work.image})`, backgroundPosition: pos(i) }} />
+              <em>{real ? String(i + 1).padStart(2, "0") : `0:${String(i * 2).padStart(2, "0")}`}</em>
             </button>
           ))}
-        </div>
+        </div>}
       </div>
       <style>{css}</style>
     </main>
@@ -100,14 +109,17 @@ const css = `
 .pj-quote blockquote{font-size:22px;font-weight:500;letter-spacing:-.035em;line-height:1.15;color:#555}
 .pj-quote cite{display:block;margin-top:10px;font-style:normal;font-size:12px;color:var(--ink-4)}
 .pj-next{margin-top:80px;display:flex;flex-direction:column;align-items:center;gap:8px;padding-right:20%}
-.pj-next-frame{position:relative;display:block;width:150px;margin-top:70px}
-.pj-next-frame img{width:100%;aspect-ratio:4/3;object-fit:cover;box-shadow:0 0 0 5px var(--ink),0 16px 30px -10px rgba(0,0,0,.4);transition:transform .8s var(--ease-out)}
-.pj-next-frame .w{position:absolute;top:-70px;height:70px;width:1px;background:rgba(26,26,26,.35)}
-.pj-next-frame .w.l{left:50%;transform-origin:0 0;transform:rotate(-28deg)}.pj-next-frame .w.r{left:50%;transform-origin:0 0;transform:rotate(28deg)}
-.pj-next-frame strong{display:block;margin-top:14px;text-align:center;font-size:13px;font-weight:600}
+.pj-next-frame{position:relative;display:block;width:150px;margin-top:30px}
+.pj-next-frame img{width:100%;aspect-ratio:4/3;object-fit:cover;box-shadow:0 0 0 5px var(--panel),0 16px 30px -10px rgba(0,0,0,.4);transition:transform .8s var(--ease-out)}
+.pj-next-frame .p{position:absolute;top:calc(150px*.75 + 5px);height:46px;width:4px;background:var(--panel)}
+.pj-next-frame .p.l{left:16%}.pj-next-frame .p.r{right:16%}
+.pj-next-frame em{position:absolute;right:-5px;top:-5px;transform:translateY(-100%);padding:5px 6px;background:var(--accent);color:#fff;font-style:normal;font-size:11px;font-weight:700}
+.pj-next-frame strong{display:block;margin-top:58px;text-align:center;font-size:13px;font-weight:600}
 .pj-next-frame:hover img{transform:rotate(-2deg)}
 .pj-media{position:sticky;top:96px;align-self:start}
-.pj-screen{aspect-ratio:3/4;max-height:calc(100vh - 230px);margin:0 auto;overflow:hidden;background:#111}
+.pj-screen{position:relative;aspect-ratio:4/3;max-height:calc(100vh - 230px);margin:0 auto;overflow:hidden;background:#111;box-shadow:0 0 0 8px var(--panel)}
+.pj-screen img[data-drawing]{transform:none;object-fit:contain;background:#efebe3}
+.pill-no{background:var(--accent);color:#fff}
 .pj-screen img{width:100%;height:100%;object-fit:cover;transform:scale(1.25)}
 .pj-bar{display:flex;justify-content:space-between;margin:10px auto 8px;font-size:11px;color:var(--ink-3);max-width:100%}
 .pj-ctrl b{font-weight:400;margin-left:12px}

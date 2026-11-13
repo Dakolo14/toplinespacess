@@ -9,7 +9,8 @@
   --menu: #f3efef;
   --floor: #e2ded6;
   --wall: #f2f1ee;
-  --accent: #fe1e34;
+  --accent: #0b8a55; /* Naija green */
+  --panel: #1d1b18;
   --gutter: 44px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
