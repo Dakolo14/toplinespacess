@@ -2,6 +2,8 @@
 .g-view {
   position: absolute;
   inset: 0;
+  z-index: 0;
+  isolation: isolate;
   overflow: hidden;
   background: var(--bg);
   perspective-origin: 50% 50%;
@@ -165,7 +167,7 @@
 .g-head .ln > span { transform: translateY(110%); transition: transform 0.9s var(--ease-out); }
 .g-root[data-ready] .g-head .ln > span { transform: none; }
 
-.g-intro { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+.g-intro { position: absolute; inset: 0; pointer-events: none; z-index: 2; transform: translateZ(0); }
 .g-cta {
   position: absolute;
   left: 50%;
@@ -206,3 +208,12 @@
 .g-root:not([data-phase="intro"]) .g-cta,
 .g-root:not([data-phase="intro"]) .g-blurb { opacity: 0; transition-delay: 0s; transition-duration: 0.4s; pointer-events: none; }
 .g-root[data-phase="leaving"] .g-cta, .g-root[data-phase="leaving"] .g-blurb { transition-delay: 1.6s; }
+
+/* Keep mobile GPU memory light so iOS Safari / mobile browsers don't crash on large 3D planes */
+.g-root[data-phone] .g-drift,
+.g-root[data-phone] .g-halo,
+.g-root[data-phone] .g-pool,
+.g-root[data-phone] .g-ceil .g-lights { display: none; }
+.g-root[data-phone] .g-floor { background: var(--floor); }
+.g-root[data-phone] .g-ceil { background: #e7e6e2; }
+.g-root[data-phone] .g-shadow { box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.25); }

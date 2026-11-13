@@ -44,7 +44,7 @@ export default function Gallery() {
   const [size, setSize] = useState<{ W: number; H: number } | null>(null);
   const [phase, setPhase] = useState<Phase>("intro");
   const [ready, setReady] = useState(false);
-  const [ajar, setAjar] = useState(false);
+  const ajarRef = useRef(false);
   const works = galleryWorks;
 
   const viewRef = useRef<HTMLDivElement>(null);
@@ -292,9 +292,6 @@ export default function Gallery() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [L]);
 
-  const ajarRef = useRef(false);
-  ajarRef.current = ajar;
-
   const openWork = (w: Work, el: HTMLElement | null) => {
     const img = el?.querySelector("img");
     if (img) zoomToPage(img, `/work/${w.slug}`, router);
@@ -302,7 +299,7 @@ export default function Gallery() {
   };
 
   return (
-    <div className="g-root" ref={viewRef} data-phase={phase} data-ready={ready || undefined}>
+    <div className="g-root" ref={viewRef} data-phase={phase} data-ready={ready || undefined} data-phone={L?.phone || undefined}>
       <div className="g-view" style={L ? { perspective: px(L.P) } : undefined}>
       {L && (
         <div className="g-world" ref={worldRef}>
@@ -316,16 +313,16 @@ export default function Gallery() {
         <button
           className="g-cta"
           onClick={enter}
-          onPointerEnter={() => setAjar(true)}
-          onPointerLeave={() => setAjar(false)}
-          onFocus={() => setAjar(true)}
-          onBlur={() => setAjar(false)}
+          onPointerEnter={() => { ajarRef.current = true; }}
+          onPointerLeave={() => { ajarRef.current = false; }}
+          onFocus={() => { ajarRef.current = true; }}
+          onBlur={() => { ajarRef.current = false; }}
         >
           <span className="g-cta-in">{site.intro.cta}</span>
         </button>
         <p className="g-blurb">{site.intro.blurb}</p>
       </div>
-      <div className="g-hit" onClick={enter} onPointerEnter={() => setAjar(true)} onPointerLeave={() => setAjar(false)} />
+      <div className="g-hit" onClick={enter} onPointerEnter={() => { ajarRef.current = true; }} onPointerLeave={() => { ajarRef.current = false; }} />
     </div>
   );
 }
@@ -354,8 +351,11 @@ function Room({
   });
   L.doors.forEach((d) => holes[2].push({ x0: d.u - d.w / 2, x1: d.u + d.w / 2, y0: wallH - d.h, y1: wallH }));
 
-  const wallBg = (i: number) =>
-    `linear-gradient(90deg, rgba(0,0,0,.06), transparent 3%, transparent 97%, rgba(0,0,0,.06)), linear-gradient(rgba(255,255,255,.5), transparent 38%, transparent 80%, rgba(170,160,145,.16)), ${["#f1f0ed", "#f3f2ef", "#efeeeb"][i]}`;
+  const wallBg = (i: number) => {
+    const base = ["#f1f0ed", "#f3f2ef", "#efeeeb"][i];
+    if (L.phone) return base;
+    return `linear-gradient(90deg, rgba(0,0,0,.06), transparent 3%, transparent 97%, rgba(0,0,0,.06)), linear-gradient(rgba(255,255,255,.5), transparent 38%, transparent 80%, rgba(170,160,145,.16)), ${base}`;
+  };
 
   // seams between hanging positions
   const seams = (wall: WallId) => {
@@ -436,7 +436,7 @@ function Room({
               onClick={(e) => onOpen(w, e.currentTarget)}
             >
               <img src={w.image} alt="" draggable={false} decoding="async" />
-              {w.video && <video data-item-video={idx} src={w.video} muted loop playsInline preload="none" />}
+              {!L.phone && w.video && <video data-item-video={idx} src={w.video} muted loop playsInline preload="none" />}
             </button>
             {/* number tab clipped to the top corner of the panel */}
             <div className="g-tab" style={{ left: px(it.w / 2 - L.frameT - 2), top: px(top - L.frameT) }}>{w.no}</div>
