@@ -12,17 +12,22 @@ const FRAMES = 8;
 
 export default function Project({ work, next }: { work: Work; next: Work }) {
   const router = useRouter();
-  const [at, setAt] = useState(2);
+  // slides: every photo, with the film (if any) second
+  const slides: { src: string; video?: boolean }[] = work.images.map((src) => ({ src }));
+  if (work.video) slides.splice(Math.min(1, slides.length), 0, { src: work.video, video: true });
+  const [at, setAt] = useState(slides.length > 1 ? 0 : 2);
   useEffect(() => { releaseZoom(); }, []);
+  const onVideo = slides.length > 1 && slides[at % slides.length]?.video;
   useEffect(() => {
-    const id = setInterval(() => setAt((a) => a + 1), 2600);
-    return () => clearInterval(id);
-  }, []);
+    const id = setTimeout(() => setAt((a) => a + 1), onVideo ? 12000 : 3200);
+    return () => clearTimeout(id);
+  }, [at, onVideo]);
   const close = () => (window.history.length > 1 ? router.back() : router.push("/"));
   const pos = (i: number) => `${(i / (FRAMES - 1)) * 100}% ${50 + Math.sin(i) * 20}%`;
-  const real = work.images.length > 1; // real photo set: the strip steps through photos instead of panning one image
+  const real = slides.length > 1; // real photo set: the strip steps through photos instead of panning one image
   const drawing = work.image.endsWith(".svg"); // placeholder elevation drawing until photos arrive
-  const frames = real ? work.images.length : FRAMES;
+  const frames = real ? slides.length : FRAMES;
+  const cur = slides[at % frames];
 
   return (
     <main className="pj">
@@ -62,22 +67,26 @@ export default function Project({ work, next }: { work: Work; next: Work }) {
         <motion.div className="pj-screen" initial={{ opacity: 0, scale: 1.02 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, ease: EASE, delay: 0.2 }}>
           {real ? (
             <AnimatePresence initial={false}>
-              <motion.img key={at % frames} src={work.images[at % frames]} alt={work.title} style={{ position: "absolute", inset: 0, transform: "none" }}
-                initial={{ clipPath: "inset(0 0 0 100%)" }} animate={{ clipPath: "inset(0 0 0 0%)" }} exit={{ opacity: 1 }} transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1] }} />
+              <motion.div key={at % frames} className="pj-slide"
+                initial={{ clipPath: "inset(0 0 0 100%)" }} animate={{ clipPath: "inset(0 0 0 0%)" }} exit={{ opacity: 1 }} transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1] }}>
+                {cur?.video ? <video src={cur.src} autoPlay muted loop playsInline /> : <img src={cur?.src} alt={work.title} />}
+              </motion.div>
             </AnimatePresence>
           ) : (
             <img src={work.image} alt={work.title} data-drawing={drawing || undefined} style={drawing ? undefined : { objectPosition: pos(at % frames), transition: "object-position 2.4s cubic-bezier(.65,0,.35,1)" }} />
           )}
         </motion.div>
         <div className="pj-bar">
-          <span>{real ? `Photo ${(at % frames) + 1} of ${frames}` : drawing ? "Set elevation, photos coming soon" : `0:${String((at % frames) * 2).padStart(2, "0")} / 0:${String(FRAMES * 2).padStart(2, "0")}`}</span>
+          <span>{real ? (cur?.video ? "Film" : `${(at % frames) + 1} of ${frames}`) : drawing ? "Set elevation, photos coming soon" : `0:${String((at % frames) * 2).padStart(2, "0")} / 0:${String(FRAMES * 2).padStart(2, "0")}`}</span>
           <span className="pj-ctrl">{work.location}</span>
         </div>
         {!drawing && <div className="pj-strip">
           {Array.from({ length: frames }).map((_, i) => (
             <button key={i} data-on={i === at % frames || undefined} onClick={() => setAt(i)}>
-              <span style={real ? { backgroundImage: `url(${work.images[i]})`, backgroundSize: "cover", backgroundPosition: "center" } : { backgroundImage: `url(${work.image})`, backgroundPosition: pos(i) }} />
-              <em>{real ? String(i + 1).padStart(2, "0") : `0:${String(i * 2).padStart(2, "0")}`}</em>
+              {real && slides[i].video
+                ? <span className="pj-film"><video src={slides[i].src} muted playsInline preload="metadata" /><b>▶</b></span>
+                : <span style={real ? { backgroundImage: `url(${slides[i].src})`, backgroundSize: "cover", backgroundPosition: "center" } : { backgroundImage: `url(${work.image})`, backgroundPosition: pos(i) }} />}
+              <em>{real ? (slides[i].video ? "Film" : String(i + 1).padStart(2, "0")) : `0:${String(i * 2).padStart(2, "0")}`}</em>
             </button>
           ))}
         </div>}
@@ -123,7 +132,12 @@ const css = `
 .pj-screen img{width:100%;height:100%;object-fit:cover;transform:scale(1.25)}
 .pj-bar{display:flex;justify-content:space-between;margin:10px auto 8px;font-size:11px;color:var(--ink-3);max-width:100%}
 .pj-ctrl b{font-weight:400;margin-left:12px}
-.pj-strip{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.pj-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px 4px}
+.pj-slide{position:absolute;inset:0;background:#111}
+.pj-slide img,.pj-slide video{width:100%;height:100%;object-fit:contain;transform:none!important}
+.pj-film{overflow:hidden;background:#111!important}
+.pj-film video{width:100%;height:100%;object-fit:cover}
+.pj-film b{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:12px}
 .pj-strip button{display:flex;flex-direction:column;gap:4px;font-size:10px;color:var(--ink-4);align-items:center}
 .pj-strip span{display:block;width:100%;aspect-ratio:3/4;background-size:400%;filter:grayscale(1) brightness(1.1);opacity:.6;transition:filter .5s,opacity .5s,transform .5s var(--ease-out);position:relative}
 .pj-strip button:hover span{opacity:1}

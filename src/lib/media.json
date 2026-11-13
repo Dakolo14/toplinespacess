@@ -1,1 +1,252 @@
-{}
+{
+  "aff-set": {
+    "images": [
+      "/projects/aff-set/01.jpg"
+    ],
+    "ratio": 0.8727,
+    "cover": "/projects/aff-set/01.jpg",
+    "video": "/projects/aff-set/video.mp4"
+  },
+  "ay-live-2018": {
+    "images": [
+      "/projects/ay-live-2018/01.jpg"
+    ],
+    "ratio": 1.0146,
+    "cover": "/projects/ay-live-2018/01.jpg",
+    "video": "/projects/ay-live-2018/video.mp4"
+  },
+  "big-talk-with-dsa": {
+    "images": [
+      "/projects/big-talk-with-dsa/01.jpg",
+      "/projects/big-talk-with-dsa/02.jpg",
+      "/projects/big-talk-with-dsa/03.jpg",
+      "/projects/big-talk-with-dsa/04.jpg",
+      "/projects/big-talk-with-dsa/05.jpg",
+      "/projects/big-talk-with-dsa/06.jpg",
+      "/projects/big-talk-with-dsa/07.jpg",
+      "/projects/big-talk-with-dsa/08.jpg",
+      "/projects/big-talk-with-dsa/09.jpg"
+    ],
+    "ratio": 1.4263,
+    "cover": "/projects/big-talk-with-dsa/01.jpg"
+  },
+  "bottle-king": {
+    "images": [
+      "/projects/bottle-king/01.jpg",
+      "/projects/bottle-king/02.jpg",
+      "/projects/bottle-king/03.jpg",
+      "/projects/bottle-king/04.jpg",
+      "/projects/bottle-king/05.jpg",
+      "/projects/bottle-king/06.jpg",
+      "/projects/bottle-king/07.jpg",
+      "/projects/bottle-king/08.jpg",
+      "/projects/bottle-king/09.jpg",
+      "/projects/bottle-king/10.jpg",
+      "/projects/bottle-king/11.jpg",
+      "/projects/bottle-king/12.jpg",
+      "/projects/bottle-king/13.jpg",
+      "/projects/bottle-king/14.jpg",
+      "/projects/bottle-king/15.jpg",
+      "/projects/bottle-king/16.jpg"
+    ],
+    "ratio": 1.0453,
+    "cover": "/projects/bottle-king/01.jpg",
+    "video": "/projects/bottle-king/video.mp4"
+  },
+  "budweiser": {
+    "images": [
+      "/projects/budweiser/01.jpg",
+      "/projects/budweiser/02.jpg",
+      "/projects/budweiser/03.jpg",
+      "/projects/budweiser/04.jpg",
+      "/projects/budweiser/05.jpg",
+      "/projects/budweiser/06.jpg"
+    ],
+    "ratio": 1.3789,
+    "cover": "/projects/budweiser/01.jpg"
+  },
+  "hymnodia": {
+    "images": [
+      "/projects/hymnodia/01.jpg",
+      "/projects/hymnodia/02.jpg",
+      "/projects/hymnodia/03.jpg",
+      "/projects/hymnodia/04.jpg",
+      "/projects/hymnodia/05.jpg",
+      "/projects/hymnodia/06.jpg",
+      "/projects/hymnodia/07.jpg",
+      "/projects/hymnodia/08.jpg"
+    ],
+    "ratio": 0.7724,
+    "cover": "/projects/hymnodia/01.jpg",
+    "video": "/projects/hymnodia/video.mp4"
+  },
+  "interior-set": {
+    "images": [
+      "/projects/interior-set/01.jpg",
+      "/projects/interior-set/02.jpg",
+      "/projects/interior-set/03.jpg",
+      "/projects/interior-set/04.jpg",
+      "/projects/interior-set/05.jpg",
+      "/projects/interior-set/06.jpg",
+      "/projects/interior-set/07.jpg",
+      "/projects/interior-set/08.jpg",
+      "/projects/interior-set/09.jpg",
+      "/projects/interior-set/10.jpg",
+      "/projects/interior-set/11.jpg",
+      "/projects/interior-set/12.jpg",
+      "/projects/interior-set/13.jpg",
+      "/projects/interior-set/14.jpg",
+      "/projects/interior-set/15.jpg",
+      "/projects/interior-set/16.jpg"
+    ],
+    "ratio": 1.3333,
+    "cover": "/projects/interior-set/01.jpg",
+    "video": "/projects/interior-set/video.mp4"
+  },
+  "kiosk": {
+    "images": [
+      "/projects/kiosk/01.jpg",
+      "/projects/kiosk/02.jpg",
+      "/projects/kiosk/03.jpg"
+    ],
+    "ratio": 1.414,
+    "cover": "/projects/kiosk/01.jpg"
+  },
+  "mbgn": {
+    "images": [
+      "/projects/mbgn/01.jpg",
+      "/projects/mbgn/02.jpg",
+      "/projects/mbgn/03.jpg",
+      "/projects/mbgn/04.jpg",
+      "/projects/mbgn/05.jpg",
+      "/projects/mbgn/06.jpg",
+      "/projects/mbgn/07.jpg",
+      "/projects/mbgn/08.jpg",
+      "/projects/mbgn/09.jpg",
+      "/projects/mbgn/10.jpg",
+      "/projects/mbgn/11.jpg",
+      "/projects/mbgn/12.jpg",
+      "/projects/mbgn/13.jpg",
+      "/projects/mbgn/14.jpg",
+      "/projects/mbgn/15.jpg",
+      "/projects/mbgn/16.jpg"
+    ],
+    "ratio": 2.1818,
+    "cover": "/projects/mbgn/01.jpg"
+  },
+  "nsia": {
+    "images": [
+      "/projects/nsia/01.jpg",
+      "/projects/nsia/02.jpg",
+      "/projects/nsia/03.jpg",
+      "/projects/nsia/04.jpg"
+    ],
+    "ratio": 1.7804,
+    "cover": "/projects/nsia/01.jpg"
+  },
+  "others": {
+    "images": [
+      "/projects/others/01.jpg"
+    ],
+    "ratio": 1.0129,
+    "cover": "/projects/others/01.jpg"
+  },
+  "ovation-red-carol": {
+    "images": [
+      "/projects/ovation-red-carol/01.jpg"
+    ],
+    "ratio": 1.0094,
+    "cover": "/projects/ovation-red-carol/01.jpg",
+    "video": "/projects/ovation-red-carol/video.mp4"
+  },
+  "prefabs": {
+    "images": [
+      "/projects/prefabs/01.jpg",
+      "/projects/prefabs/02.jpg"
+    ],
+    "ratio": 1.0927,
+    "cover": "/projects/prefabs/01.jpg"
+  },
+  "radio-now": {
+    "images": [
+      "/projects/radio-now/01.jpg",
+      "/projects/radio-now/02.jpg",
+      "/projects/radio-now/03.jpg",
+      "/projects/radio-now/04.jpg",
+      "/projects/radio-now/05.jpg",
+      "/projects/radio-now/06.jpg",
+      "/projects/radio-now/07.jpg",
+      "/projects/radio-now/08.jpg",
+      "/projects/radio-now/09.jpg",
+      "/projects/radio-now/10.jpg",
+      "/projects/radio-now/11.jpg"
+    ],
+    "ratio": 0.75,
+    "cover": "/projects/radio-now/01.jpg",
+    "video": "/projects/radio-now/video.mp4"
+  },
+  "rhythm-fm": {
+    "images": [
+      "/projects/rhythm-fm/01.jpg",
+      "/projects/rhythm-fm/02.jpg",
+      "/projects/rhythm-fm/03.jpg",
+      "/projects/rhythm-fm/04.jpg",
+      "/projects/rhythm-fm/05.jpg",
+      "/projects/rhythm-fm/06.jpg",
+      "/projects/rhythm-fm/07.jpg",
+      "/projects/rhythm-fm/08.jpg",
+      "/projects/rhythm-fm/09.jpg",
+      "/projects/rhythm-fm/10.jpg"
+    ],
+    "ratio": 0.8155,
+    "cover": "/projects/rhythm-fm/01.jpg",
+    "video": "/projects/rhythm-fm/video.mp4"
+  },
+  "silverbird-tv-sets": {
+    "images": [
+      "/projects/silverbird-tv-sets/01.jpg",
+      "/projects/silverbird-tv-sets/02.jpg",
+      "/projects/silverbird-tv-sets/03.jpg",
+      "/projects/silverbird-tv-sets/04.jpg",
+      "/projects/silverbird-tv-sets/05.jpg",
+      "/projects/silverbird-tv-sets/06.jpg",
+      "/projects/silverbird-tv-sets/07.jpg",
+      "/projects/silverbird-tv-sets/08.jpg",
+      "/projects/silverbird-tv-sets/09.jpg",
+      "/projects/silverbird-tv-sets/10.jpg",
+      "/projects/silverbird-tv-sets/11.jpg",
+      "/projects/silverbird-tv-sets/12.jpg",
+      "/projects/silverbird-tv-sets/13.jpg",
+      "/projects/silverbird-tv-sets/14.jpg",
+      "/projects/silverbird-tv-sets/15.jpg",
+      "/projects/silverbird-tv-sets/16.jpg"
+    ],
+    "ratio": 1.3442,
+    "cover": "/projects/silverbird-tv-sets/01.jpg"
+  },
+  "talk-active-with-kike": {
+    "images": [
+      "/projects/talk-active-with-kike/01.jpg",
+      "/projects/talk-active-with-kike/02.jpg",
+      "/projects/talk-active-with-kike/03.jpg",
+      "/projects/talk-active-with-kike/04.jpg",
+      "/projects/talk-active-with-kike/05.jpg",
+      "/projects/talk-active-with-kike/06.jpg",
+      "/projects/talk-active-with-kike/07.jpg",
+      "/projects/talk-active-with-kike/08.jpg"
+    ],
+    "ratio": 1.8026,
+    "cover": "/projects/talk-active-with-kike/01.jpg",
+    "video": "/projects/talk-active-with-kike/video.mp4"
+  },
+  "uba-ceo-awards-2019-silver-carpet": {
+    "images": [
+      "/projects/uba-ceo-awards-2019-silver-carpet/01.jpg",
+      "/projects/uba-ceo-awards-2019-silver-carpet/02.jpg",
+      "/projects/uba-ceo-awards-2019-silver-carpet/03.jpg"
+    ],
+    "ratio": 1.414,
+    "cover": "/projects/uba-ceo-awards-2019-silver-carpet/01.jpg",
+    "video": "/projects/uba-ceo-awards-2019-silver-carpet/video.mp4"
+  }
+}

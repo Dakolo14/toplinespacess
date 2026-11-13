@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
-<rect width="1000" height="1000" fill="#efebe3"/>
-<path d="M0 0V1000M50 0V1000M100 0V1000M150 0V1000M200 0V1000M250 0V1000M300 0V1000M350 0V1000M400 0V1000M450 0V1000M500 0V1000M550 0V1000M600 0V1000M650 0V1000M700 0V1000M750 0V1000M800 0V1000M850 0V1000M900 0V1000M950 0V1000M1000 0V1000M0 0H1000M0 50H1000M0 100H1000M0 150H1000M0 200H1000M0 250H1000M0 300H1000M0 350H1000M0 400H1000M0 450H1000M0 500H1000M0 550H1000M0 600H1000M0 650H1000M0 700H1000M0 750H1000M0 800H1000M0 850H1000M0 900H1000M0 950H1000M0 1000H1000" stroke="#1d1b18" stroke-opacity=".05" stroke-width="1"/>
-<path d="M200 340L500 250L800 340Z" fill="#0b7a4b" stroke="#1d1b18" stroke-width="3"/><rect x="240" y="340" width="520" height="470" fill="#e6e1d6" stroke="#1d1b18" stroke-width="3"/><rect x="290" y="390" width="420" height="170" fill="#1d1b18" stroke="#1d1b18" stroke-width="3"/><path d="M270 560L240 610H760L730 560"  stroke="#1d1b18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="#efebe3"/><rect x="290" y="610" width="420" height="200" fill="none" stroke="#1d1b18" stroke-width="2"/><path d="M500 610V810" fill="none" stroke="#1d1b18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="310" y="410" width="70" height="70" fill="#efebe3" opacity=".18"/><rect x="410" y="410" width="70" height="110" fill="#efebe3" opacity=".18"/><rect x="510" y="410" width="70" height="70" fill="#efebe3" opacity=".18"/><rect x="610" y="410" width="70" height="110" fill="#efebe3" opacity=".18"/>
-<path d="M40 810H960" fill="none" stroke="#1d1b18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M40 836h920" fill="none" stroke="#1d1b18" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+<rect width="1200" height="900" fill="#efebe3"/>
+<path d="M0 0V900M50 0V900M100 0V900M150 0V900M200 0V900M250 0V900M300 0V900M350 0V900M400 0V900M450 0V900M500 0V900M550 0V900M600 0V900M650 0V900M700 0V900M750 0V900M800 0V900M850 0V900M900 0V900M950 0V900M1000 0V900M1050 0V900M1100 0V900M1150 0V900M1200 0V900M0 0H1200M0 50H1200M0 100H1200M0 150H1200M0 200H1200M0 250H1200M0 300H1200M0 350H1200M0 400H1200M0 450H1200M0 500H1200M0 550H1200M0 600H1200M0 650H1200M0 700H1200M0 750H1200M0 800H1200M0 850H1200M0 900H1200" stroke="#1d1b18" stroke-opacity=".05" stroke-width="1"/>
+<path d="M300 240L600 150L900 240Z" fill="#0b7a4b" stroke="#1d1b18" stroke-width="3"/><rect x="340" y="240" width="520" height="470" fill="#e6e1d6" stroke="#1d1b18" stroke-width="3"/><rect x="390" y="290" width="420" height="170" fill="#1d1b18" stroke="#1d1b18" stroke-width="3"/><path d="M370 460L340 510H860L830 460"  stroke="#1d1b18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="#efebe3"/><rect x="390" y="510" width="420" height="200" fill="none" stroke="#1d1b18" stroke-width="2"/><path d="M600 510V710" fill="none" stroke="#1d1b18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><rect x="410" y="310" width="70" height="70" fill="#efebe3" opacity=".18"/><rect x="510" y="310" width="70" height="110" fill="#efebe3" opacity=".18"/><rect x="610" y="310" width="70" height="70" fill="#efebe3" opacity=".18"/><rect x="710" y="310" width="70" height="110" fill="#efebe3" opacity=".18"/>
+<path d="M40 710H1160" fill="none" stroke="#1d1b18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M40 736h1120" fill="none" stroke="#1d1b18" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 8"/>
 <g font-family="Inter,Helvetica,Arial,sans-serif" fill="#1d1b18">
-<text x="40" y="908" font-size="40" font-weight="700" letter-spacing="-1.6">Prefabs</text>
-<text x="40" y="944" font-size="20" font-weight="500" opacity=".55">Kiosks, prefabs &amp; interiors · Photos coming soon</text>
-<text x="960" y="908" font-size="40" font-weight="700" text-anchor="end" fill="#0b7a4b">No. 16</text>
-<text x="960" y="944" font-size="20" font-weight="500" text-anchor="end" opacity=".55">TopLine Spaces · Lagos</text>
+<text x="40" y="808" font-size="40" font-weight="700" letter-spacing="-1.6">Prefabs</text>
+<text x="40" y="844" font-size="20" font-weight="500" opacity=".55">Kiosks, prefabs &amp; interiors · Photos coming soon</text>
+<text x="1160" y="808" font-size="40" font-weight="700" text-anchor="end" fill="#0b7a4b">No. 17</text>
+<text x="1160" y="844" font-size="20" font-weight="500" text-anchor="end" opacity=".55">TopLine Spaces · Lagos</text>
 </g>
 </svg>

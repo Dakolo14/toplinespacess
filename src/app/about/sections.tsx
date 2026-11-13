@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
 import { about, works } from "@/lib/content";
 import { Fade, Lines } from "@/components/ui/Reveal";
@@ -174,7 +174,7 @@ export function Clients() {
       <Head kicker="Brands we have made things for" title="Worked with" />
       <div className="ab-shelf">
         {about.clients.map((c, i) => (
-          <motion.div key={i} className="ab-book" style={{ height: `${c.h * 280}px`, background: c.tone }}
+          <motion.div key={i} className="ab-book" style={{ "--h": c.h, background: c.tone } as CSSProperties}
             initial={{ y: 60, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 120, damping: 14, delay: i * 0.06 }}
             whileHover={{ y: -18, rotate: i % 2 ? 2 : -2 }}>

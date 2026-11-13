@@ -17,6 +17,6 @@ Next.js 15 + Framer Motion. Layout and motion modelled on the MiniMaze Light 3D 
 
 ## Adding project photos
 
-1. Fill the folders in `~/Desktop/TopLine Spaces Website/projects/` (one per project). Name the best photo `cover.jpg`, add more photos, an optional `.mp4`, and an optional `about.txt` (`Client:`, `Year:`, `Location:`, `What we built:`).
-2. Run `npm run sync-projects`. Photos are copied into `public/projects/<slug>/` and notes land in `src/lib/media.json`.
-3. Projects without photos keep their drawn placeholder. A brand-new folder also needs one `mk(...)` line in `src/lib/content.ts`.
+1. Each folder in `~/Desktop/TopLine Spaces Website/projects/` is one project. Photos can sit in subfolders. A photo called `cover.jpg` becomes the main image (or set it in `CURATE` at the top of the script). Add an optional `about.txt` (`Client:`, `Year:`, `Location:`, `What we built:`).
+2. Run `python3 scripts/process-projects.py` (needs `pip3 install pillow` and `ffmpeg`, e.g. `brew install ffmpeg`). It resizes photos, turns the first video into a short silent loop, and writes `src/lib/media.json`.
+3. Titles, categories and the order of projects live in `src/lib/content.ts`. A brand-new folder needs one `mk(...)` line there.
