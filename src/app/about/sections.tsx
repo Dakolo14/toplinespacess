@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
 import { about, works } from "@/lib/content";
@@ -178,8 +179,10 @@ export function Clients() {
             initial={{ y: 60, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 120, damping: 14, delay: i * 0.06 }}
             whileHover={{ y: -18, rotate: i % 2 ? 2 : -2 }}>
-            <span className="yr">{c.year}</span>
-            <span className="nm">{c.name}</span>
+            <Link href={`/work/${c.slug}`} className="ab-book-link" aria-label={`${c.name} — ${c.year}`}>
+              <span className="yr">{c.year}</span>
+              <span className="nm">{c.name}</span>
+            </Link>
           </motion.div>
         ))}
       </div>
