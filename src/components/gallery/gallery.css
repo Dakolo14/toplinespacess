@@ -27,6 +27,16 @@
 .g-wall { left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; transform-origin: 0 0; }
 .g-plane { left: 0; top: 0; transform-origin: 0 0; pointer-events: none; }
 
+/* Only draw what the camera can see. On the intro the closed facade hides the whole room,
+   but the browser cannot tell, so it would raster every wall, stand and photo behind it at
+   full resolution. Inside, the facade is behind you. */
+.g-root[data-phase="intro"] .g-world > :not(.g-out),
+.g-root[data-phase="inside"] .g-world > .g-out { visibility: hidden; }
+
+/* tiled planes: the parent only carries the 3D transform, its tiles paint */
+.g-tiled { transform-style: preserve-3d; --lights: 0; }
+.g-tiled > div { pointer-events: none; }
+
 /* floor: soft edge shading, tile seams, base */
 .g-floor {
   background:
@@ -37,33 +47,26 @@
 }
 .g-ceil { background: linear-gradient(90deg, rgba(0, 0, 0, 0.06), transparent 5%, transparent 95%, rgba(0, 0, 0, 0.06)), #e7e6e2; }
 .g-lights {
-  inset: 0;
-  opacity: 0;
+  opacity: var(--lights);
   background-image: linear-gradient(to right, transparent 0%, transparent 40%, rgba(255, 255, 255, 0.6) 41%, #fff 42%, #fff 58%, rgba(255, 255, 255, 0.6) 59%, transparent 60%, transparent 100%);
   background-repeat: repeat-x;
-  -webkit-mask: linear-gradient(90deg, transparent 6%, #000 9%, #000 91%, transparent 94%);
-  mask: linear-gradient(90deg, transparent 6%, #000 9%, #000 91%, transparent 94%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 6%, #000 9%, #000 91%, transparent 94%);
+  mask-image: linear-gradient(90deg, transparent 6%, #000 9%, #000 91%, transparent 94%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
-.g-ceil .g-lights { left: 10%; right: 10%; top: 0; bottom: 0; width: auto; height: auto; }
 
-.g-wall-piece { pointer-events: none; }
-.g-facade { background: var(--bg); pointer-events: none; }
-.g-drift {
-  display: none; /* off: this wall-long animated layer painted over some stands (blank frames) in Chromium 3D sorting */
-  left: 0;
-  top: 0;
-  overflow: hidden;
+.g-wall-piece {
   pointer-events: none;
-  opacity: 0.9;
   background:
-    radial-gradient(9% 60% at 6% 40%, rgba(60, 70, 80, 0.06), transparent),
-    radial-gradient(7% 50% at 19% 68%, rgba(60, 70, 80, 0.05), transparent),
-    radial-gradient(9% 60% at 31% 40%, rgba(60, 70, 80, 0.06), transparent),
-    radial-gradient(7% 50% at 44% 68%, rgba(60, 70, 80, 0.05), transparent);
-  background-size: 200% 100%;
-  animation: g-drift 70s linear infinite;
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06), transparent 3%, transparent 97%, rgba(0, 0, 0, 0.06)),
+    linear-gradient(rgba(255, 255, 255, 0.5), transparent 38%, transparent 80%, rgba(170, 160, 145, 0.16)),
+    var(--wall);
 }
-@keyframes g-drift { to { background-position: -200% 0; } }
+.g-wall-piece.w0 { --wall: #f1f0ed; }
+.g-wall-piece.w1 { --wall: #f3f2ef; }
+.g-wall-piece.w2 { --wall: #efeeeb; }
+.g-facade { background: var(--bg); pointer-events: none; }
 .g-rail { display: none; left: 0; height: 6px; background: linear-gradient(#fff, #e6e4e0); box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); pointer-events: none; }
 .g-skirt { left: 0; height: 5px; background: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.05)); pointer-events: none; }
 .g-seam { top: 0; width: 4px; background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.04) 70%, rgba(255, 255, 255, 0.6)); pointer-events: none; }
@@ -115,8 +118,8 @@
 .g-frame:hover img { transform: scale(1.025); }
 .g-frame:focus-visible { box-shadow: 0 0 0 3px var(--accent) !important; }
 
-.g-cap { display: grid; padding: 9px 10px 10px; background: var(--panel); box-shadow: 0 10px 20px -12px rgba(0,0,0,.3); text-align: left; font-size: 13px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; color: #f3efe7; transform: translateZ(2px); pointer-events: none; }
-.g-cap-sub { font-weight: 500; opacity: 0.6; font-size: 11px; }
+.g-cap { display: grid; padding: 9px 10px 10px; background: var(--panel); box-shadow: 0 10px 20px -12px rgba(0,0,0,.3); text-align: left; font-size: 15px; line-height: 1.2; font-weight: 700; letter-spacing: -0.025em; color: #fff; transform: translateZ(2px); pointer-events: none; }
+.g-cap-sub { font-weight: 600; opacity: 0.82; font-size: 12.5px; letter-spacing: -0.01em; margin-top: 2px; }
 .g-cap .ln > span { transform: translateY(110%); transition: transform 0.5s cubic-bezier(0.55, 0, 0.45, 1); }
 [data-item].on .g-cap .ln > span { transform: none; transition: transform 0.9s var(--ease-out); }
 
@@ -225,10 +228,9 @@
 .g-root[data-phase="leaving"] .g-cta, .g-root[data-phase="leaving"] .g-blurb { transition-delay: 1.6s; }
 
 /* Keep mobile GPU memory light so iOS Safari / mobile browsers don't crash on large 3D planes */
-.g-root[data-phone] .g-drift,
 .g-root[data-phone] .g-halo,
-.g-root[data-phone] .g-pool,
-.g-root[data-phone] .g-ceil .g-lights { display: none; }
+.g-root[data-phone] .g-pool { display: none; }
 .g-root[data-phone] .g-floor { background: var(--floor); }
+.g-root[data-phone] .g-wall-piece { background: var(--wall); }
 .g-root[data-phone] .g-ceil { background: #e7e6e2; }
 .g-root[data-phone] .g-shadow { box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.25); }

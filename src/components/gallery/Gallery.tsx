@@ -25,6 +25,36 @@ function wallXform(L: Layout, wall: WallId, u: number, y: number, out = 0) {
 
 type Hole = { x0: number; x1: number; y0: number; y1: number };
 // Split a wall rectangle into pieces around rectangular holes (niches, doorways).
+// Huge 3D planes (floor, ceiling, long walls) are cut into ~1100px tiles. Browsers raster a
+// 3D layer at one scale for the whole layer, so a 10,000px floor seen at a grazing angle
+// asks the GPU for gigabytes of tiles and it starts dropping them (half-blank screen, stuck
+// menu). Small tiles each get their own scale and are skipped when off screen.
+const TILE = 1100;
+function Tiles({ x, y, w, h, cls, bgSize, maskSize }: {
+  x: number; y: number; w: number; h: number; cls: string; bgSize?: string; maskSize?: string;
+}) {
+  const nx = Math.max(1, Math.ceil(w / TILE));
+  const ny = Math.max(1, Math.ceil(h / TILE));
+  const tw = w / nx;
+  const th = h / ny;
+  const out: React.ReactNode[] = [];
+  for (let j = 0; j < ny; j++) {
+    for (let i = 0; i < nx; i++) {
+      const l = x + i * tw;
+      const t = y + j * th;
+      const pos = `${px(-l)} ${px(-t)}`;
+      out.push(
+        <div key={`${i}-${j}`} className={cls} style={{
+          left: px(l), top: px(t), width: px(tw + 0.6), height: px(th + 0.6),
+          backgroundSize: bgSize, backgroundPosition: pos,
+          ...(maskSize ? { maskSize, WebkitMaskSize: maskSize, maskPosition: pos, WebkitMaskPosition: pos } : null),
+        }} />,
+      );
+    }
+  }
+  return <>{out}</>;
+}
+
 function wallPieces(len: number, h: number, holes: Hole[]) {
   const out: Hole[] = [];
   const hs = [...holes].sort((a, b) => a.x0 - b.x0);
@@ -187,7 +217,7 @@ export default function Gallery() {
         const pose = enterPose(L, m);
         const bob = reduce || L.phone ? 0 : -Math.abs(Math.sin(m * Math.PI * 5)) * L.H * 0.006 * Math.sin(Math.PI * m);
         setCam(pose, bob);
-        if (lightsRef.current) lightsRef.current.style.opacity = String(Math.max(0, (t - 0.4) / 0.6));
+        if (lightsRef.current) lightsRef.current.style.setProperty("--lights", String(Math.max(0, (t - 0.4) / 0.6)));
         if (s.phase === "entering" && t >= 1) {
           s.phase = "inside";
           setPhase("inside");
@@ -214,7 +244,7 @@ export default function Gallery() {
         if (Math.abs(s.target - s.s) < 0.05) s.s = s.target;
         setCam(poseAt(L, s.s));
         setDoors(102);
-        if (lightsRef.current) lightsRef.current.style.opacity = "1";
+        if (lightsRef.current) lightsRef.current.style.setProperty("--lights", "1");
         const i = nearestStop(L, s.s);
         const near = Math.abs(L.stops[i].s - s.s) < (L.W * 0.56 + L.gap) * 0.32;
         setActive(near ? i : -1);
@@ -363,11 +393,6 @@ function Room({
   });
   L.doors.forEach((d) => holes[2].push({ x0: d.u - d.w / 2, x1: d.u + d.w / 2, y0: wallH - d.h, y1: wallH }));
 
-  const wallBg = (i: number) => {
-    const base = ["#f1f0ed", "#f3f2ef", "#efeeeb"][i];
-    if (L.phone) return base;
-    return `linear-gradient(90deg, rgba(0,0,0,.06), transparent 3%, transparent 97%, rgba(0,0,0,.06)), linear-gradient(rgba(255,255,255,.5), transparent 38%, transparent 80%, rgba(170,160,145,.16)), ${base}`;
-  };
 
   // seams between hanging positions
   const seams = (wall: WallId) => {
@@ -385,30 +410,35 @@ function Room({
 
   return (
     <>
-      {/* floor */}
-      <div className="g-plane g-floor" style={{
-        width: px(L.X + L.P * 2), height: px(L.Z + L.P * 0.9),
-        transform: `translate3d(${px(-L.X / 2 - L.P)},${px(L.floorY)},${px(-L.Z)}) rotateX(90deg)`,
-        backgroundSize: `100% 100%, ${px(L.H * 0.36)} ${px(L.H * 0.36)}, ${px(L.H * 0.36)} ${px(L.H * 0.36)}, auto`,
-      }} />
-      {/* ceiling */}
-      <div className="g-plane g-ceil" style={{
+      {/* floor: the strip outside the facade stays up on the intro; the rest only shows once you walk in */}
+      {[[0, L.Z, "g-plane g-tiled"], [L.Z, L.P * 0.9, "g-plane g-tiled g-out"]].map(([y0, h, cls]) => (
+        <div key={cls as string} className={cls as string} style={{
+          width: px(L.X + L.P * 2), height: px(L.Z + L.P * 0.9),
+          transform: `translate3d(${px(-L.X / 2 - L.P)},${px(L.floorY)},${px(-L.Z)}) rotateX(90deg)`,
+        }}>
+          <Tiles x={0} y={y0 as number} w={L.X + L.P * 2} h={h as number} cls="g-floor"
+            bgSize={`${px(L.X + L.P * 2)} ${px(L.Z + L.P * 0.9)}, ${px(L.H * 0.36)} ${px(L.H * 0.36)}, ${px(L.H * 0.36)} ${px(L.H * 0.36)}, auto`} />
+        </div>
+      ))}
+      {/* ceiling: the light strips are their own tiles, faded in through --lights */}
+      <div className="g-plane g-tiled" ref={lightsRef} style={{
         width: px(L.X), height: px(L.Z),
         transform: `translate3d(${px(-L.X / 2)},${px(L.ceilY)},0px) rotateX(-90deg)`,
       }}>
-        <div className="g-lights" ref={lightsRef} style={{ backgroundSize: `${px(L.gap + L.W * 0.3)} 100%` }} />
+        <Tiles x={0} y={0} w={L.X} h={L.Z} cls="g-ceil" bgSize={`${px(L.X)} ${px(L.Z)}`} />
+        {!L.phone && (
+          <Tiles x={L.X * 0.1} y={0} w={L.X * 0.8} h={L.Z} cls="g-lights"
+            bgSize={`${px(L.gap + L.W * 0.3)} ${px(L.Z)}`} maskSize={`${px(L.X * 0.8)} ${px(L.Z)}`} />
+        )}
       </div>
 
       {/* walls */}
       {([0, 1, 2] as WallId[]).map((wi) => (
         <div key={wi} className="g-wall" style={{ transform: wallXform(L, wi, 0, L.ceilY) }}>
           {wallPieces(L.wallLen[wi], wallH, holes[wi]).map((p, i) => (
-            <div key={i} className="g-wall-piece" style={{
-              left: px(p.x0), top: px(p.y0), width: px(p.x1 - p.x0 + 0.6), height: px(p.y1 - p.y0 + 0.6),
-              background: wallBg(wi), backgroundSize: `${px(L.wallLen[wi])} ${px(wallH)}`, backgroundPosition: `${px(-p.x0)} ${px(-p.y0)}`,
-            }} />
+            <Tiles key={i} x={p.x0} y={p.y0} w={p.x1 - p.x0} h={p.y1 - p.y0} cls={`g-wall-piece w${wi}`}
+              bgSize={`${px(L.wallLen[wi])} ${px(wallH)}`} />
           ))}
-          <div className="g-drift" style={{ width: px(L.wallLen[wi]), height: px(wallH), animationDuration: `${70 + wi * 9}s` }} />
           <div className="g-rail" style={{ top: px(L.railY - L.ceilY), width: px(L.wallLen[wi]) }} />
           <div className="g-skirt" style={{ top: px(wallH - 5), width: px(L.wallLen[wi]) }} />
           {seams(wi).map((x) => <div key={x} className="g-seam" style={{ left: px(x - 2), height: px(wallH) }} />)}
@@ -495,7 +525,7 @@ function Room({
       })}
 
       {/* front facade with the entrance doors */}
-      <div className="g-wall" style={{ transform: `translate3d(0px,0px,0px)` }}>
+      <div className="g-wall g-out" style={{ transform: `translate3d(0px,0px,0px)` }}>
         {wallPieces(L.X, L.floorY - L.ceilY, [{ x0: L.X / 2 - ent.w / 2, x1: L.X / 2 + ent.w / 2, y0: ent.top - L.ceilY, y1: L.floorY - L.ceilY }]).map((p, i) => (
           <div key={i} className="g-facade" style={{ left: px(p.x0 - L.X / 2), top: px(p.y0 + L.ceilY), width: px(p.x1 - p.x0 + 0.6), height: px(p.y1 - p.y0 + 0.6) }} />
         ))}
@@ -512,7 +542,7 @@ function Room({
 
 function Headline({ L, side }: { L: Layout; side: number }) {
   const ent = L.entrance;
-  const fs = Math.min(L.W * (L.phone ? 0.105 : 0.0486), 96);
+  const fs = Math.min(L.W * (L.phone ? 0.094 : 0.0486), 96);
   return (
     <div className="g-head" style={{
       width: px(ent.w), left: px(side < 0 ? 0 : -ent.w / 2), top: px(-L.H * 0.1 - ent.top), fontSize: px(fs),
