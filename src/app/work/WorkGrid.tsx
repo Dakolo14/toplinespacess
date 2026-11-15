@@ -83,7 +83,7 @@ export default function WorkGrid() {
                   }}>
                   <span className="wk-no">{w.no}</span>
                   <span className="wk-title">
-                    <span className="wk-thumb"><img src={w.image} alt="" loading="lazy" /></span>
+                    <span className="wk-thumb"><img src={w.thumb} alt="" loading="lazy" /></span>
                     {w.title}
                   </span>
                   <span className="wk-what">{w.services}</span>
@@ -96,7 +96,7 @@ export default function WorkGrid() {
           <motion.div className="wk-float" style={{ x, y }} animate={{ opacity: hover ? 1 : 0, scale: hover ? 1 : 0.85 }} transition={{ duration: 0.35, ease: EASE }} aria-hidden>
             <AnimatePresence initial={false}>
               {hover && (
-                <motion.img ref={previewRef} key={hover.slug} src={hover.image} alt="" style={{ aspectRatio: hover.ratio }}
+                <motion.img ref={previewRef} key={hover.slug} src={hover.thumb} alt="" style={{ aspectRatio: hover.ratio }}
                   initial={{ clipPath: "inset(100% 0 0 0)" }} animate={{ clipPath: "inset(0% 0 0 0)" }} exit={{ opacity: 0, transition: { duration: 0.3 } }}
                   transition={{ duration: 0.55, ease: EASE }} />
               )}
@@ -111,7 +111,7 @@ export default function WorkGrid() {
               <motion.article key={w.slug} layout initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }}
                 transition={{ duration: 0.7, ease: EASE, delay: Math.min(i, 12) * 0.04 }}>
                 <Link href={`/work/${w.slug}`} onClick={(e) => open(e, w, (e.currentTarget as HTMLElement).querySelector("img"))}>
-                  <div className="wk-cell"><img src={w.image} alt={w.title} loading="lazy" /><b>{w.no}</b></div>
+                  <div className="wk-cell"><img src={w.thumb} alt={w.title} loading="lazy" /><b>{w.no}</b></div>
                   <h2>{w.title}</h2>
                   <p>{w.services}</p>
                 </Link>
