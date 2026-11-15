@@ -45,6 +45,14 @@ export default function Gallery() {
   const [phase, setPhase] = useState<Phase>("intro");
   const [ready, setReady] = useState(false);
   const ajarRef = useRef(false);
+  // Hover sets the doors ajar. Leaving waits a beat so crossing from the room onto the
+  // Walk in button (or brushing its edge) never snaps the doors shut and open again.
+  const ajarTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const setAjar = (on: boolean) => {
+    if (ajarTimer.current) { clearTimeout(ajarTimer.current); ajarTimer.current = null; }
+    if (on) ajarRef.current = true;
+    else ajarTimer.current = setTimeout(() => { ajarRef.current = false; ajarTimer.current = null; }, 160);
+  };
   const works = galleryWorks;
 
   const viewRef = useRef<HTMLDivElement>(null);
@@ -136,8 +144,12 @@ export default function Gallery() {
       const pitch = s.ly * -1.1;
       world.style.transform = `translateZ(${px(L.P)}) rotateX(${pitch.toFixed(3)}deg) rotateY(${(-yaw).toFixed(3)}deg) translate3d(${px(-pose.p[0])},${px(-pose.p[1] + bob)},${px(-pose.p[2])})`;
     };
+    let doorDeg = "";
     const setDoors = (deg: number) => {
-      if (leafL.current) leafL.current.style.transform = `rotateY(${deg.toFixed(2)}deg)`;
+      const d = deg.toFixed(2);
+      if (d === doorDeg) return;
+      doorDeg = d;
+      if (leafL.current) leafL.current.style.transform = `rotateY(${d}deg)`;
       if (leafR.current) leafR.current.style.transform = `rotateY(${(-deg).toFixed(2)}deg)`;
     };
     const setActive = (i: number) => {
@@ -161,7 +173,7 @@ export default function Gallery() {
       s.ly += (s.my - s.ly) * (1 - Math.exp(-dt * 2.5));
 
       if (s.phase === "intro") {
-        s.ajar += ((ajarRef.current ? 4 : 0) - s.ajar) * k;
+        s.ajar += ((ajarRef.current ? 4 : 0) - s.ajar) * (1 - Math.exp(-dt * 4));
         setDoors(s.ajar);
         setCam(L.introPose);
         setActive(-1);
@@ -313,16 +325,16 @@ export default function Gallery() {
         <button
           className="g-cta"
           onClick={enter}
-          onPointerEnter={() => { ajarRef.current = true; }}
-          onPointerLeave={() => { ajarRef.current = false; }}
-          onFocus={() => { ajarRef.current = true; }}
-          onBlur={() => { ajarRef.current = false; }}
+          onPointerEnter={() => setAjar(true)}
+          onPointerLeave={() => setAjar(false)}
+          onFocus={() => setAjar(true)}
+          onBlur={() => setAjar(false)}
         >
           <span className="g-cta-in">{site.intro.cta}</span>
         </button>
         <p className="g-blurb">{site.intro.blurb}</p>
       </div>
-      <div className="g-hit" onClick={enter} onPointerEnter={() => { ajarRef.current = true; }} onPointerLeave={() => { ajarRef.current = false; }} />
+      <div className="g-hit" onClick={enter} onPointerEnter={() => setAjar(true)} onPointerLeave={() => setAjar(false)} />
     </div>
   );
 }
