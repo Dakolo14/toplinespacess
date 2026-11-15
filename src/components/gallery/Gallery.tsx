@@ -30,6 +30,8 @@ type Hole = { x0: number; x1: number; y0: number; y1: number };
 // asks the GPU for gigabytes of tiles and it starts dropping them (half-blank screen, stuck
 // menu). Small tiles each get their own scale and are skipped when off screen.
 const TILE = 1100;
+// how far the entrance doors swing open when you hover them on the intro
+const AJAR_DEG = 9;
 function Tiles({ x, y, w, h, cls, bgSize, maskSize }: {
   x: number; y: number; w: number; h: number; cls: string; bgSize?: string; maskSize?: string;
 }) {
@@ -203,7 +205,7 @@ export default function Gallery() {
       s.ly += (s.my - s.ly) * (1 - Math.exp(-dt * 2.5));
 
       if (s.phase === "intro") {
-        s.ajar += ((ajarRef.current ? 4 : 0) - s.ajar) * (1 - Math.exp(-dt * 4));
+        s.ajar += ((ajarRef.current ? AJAR_DEG : 0) - s.ajar) * (1 - Math.exp(-dt * 4));
         setDoors(s.ajar);
         setCam(L.introPose);
         setActive(-1);
@@ -356,6 +358,7 @@ export default function Gallery() {
           className="g-cta"
           onClick={enter}
           onPointerEnter={() => setAjar(true)}
+          onPointerMove={() => setAjar(true)}
           onPointerLeave={() => setAjar(false)}
           onFocus={() => setAjar(true)}
           onBlur={() => setAjar(false)}
@@ -364,7 +367,9 @@ export default function Gallery() {
         </button>
         <p className="g-blurb">{site.intro.blurb}</p>
       </div>
-      <div className="g-hit" onClick={enter} onPointerEnter={() => setAjar(true)} onPointerLeave={() => setAjar(false)} />
+      {/* pointermove as well as enter: if the page loads with the cursor already over the doors,
+          no enter event ever fires, and the doors would never open on hover */}
+      <div className="g-hit" onClick={enter} onPointerEnter={() => setAjar(true)} onPointerMove={() => setAjar(true)} onPointerLeave={() => setAjar(false)} />
     </div>
   );
 }
@@ -529,6 +534,13 @@ function Room({
         {wallPieces(L.X, L.floorY - L.ceilY, [{ x0: L.X / 2 - ent.w / 2, x1: L.X / 2 + ent.w / 2, y0: ent.top - L.ceilY, y1: L.floorY - L.ceilY }]).map((p, i) => (
           <div key={i} className="g-facade" style={{ left: px(p.x0 - L.X / 2), top: px(p.y0 + L.ceilY), width: px(p.x1 - p.x0 + 0.6), height: px(p.y1 - p.y0 + 0.6) }} />
         ))}
+        {/* what you glimpse through the doors when they swing ajar: a lit set behind them.
+            Cheap stand-in for the room, which is not drawn until you walk in. */}
+        <div className="g-peek" style={{
+          left: px(-ent.w * 0.6), top: px(ent.top), width: px(ent.w * 1.2), height: px(doorH),
+          transform: `translateZ(${px(-ent.w * 0.5 * Math.sin((AJAR_DEG + 6) * Math.PI / 180) - 30)})`,
+          backgroundImage: `radial-gradient(60% 55% at 50% 45%, rgba(255,244,214,.35), rgba(10,9,8,.55) 75%), url(${works[0]?.thumb ?? ""})`,
+        }} />
         <div className="g-leaf l" ref={leafL} style={{ left: px(-ent.w / 2), top: px(ent.top), width: px(ent.w / 2), height: px(doorH) }}>
           <Headline L={L} side={-1} />
         </div>

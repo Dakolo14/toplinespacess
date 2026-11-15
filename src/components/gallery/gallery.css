@@ -153,6 +153,8 @@
 .g-door-hit { cursor: pointer; transform: translateZ(2px); }
 
 /* entrance */
+.g-peek { background-color: #1a1714; background-size: cover; background-position: center; pointer-events: none; }
+.g-root:not([data-phase="intro"]) .g-peek { visibility: hidden; }
 .g-leaf { overflow: hidden; background: var(--bg); transform-origin: 0 50%; will-change: transform; pointer-events: none; }
 .g-leaf.r { transform-origin: 100% 50%; }
 .g-leaf.l { box-shadow: inset -1px 0 0 #dedede; }
