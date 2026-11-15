@@ -49,13 +49,14 @@ export type Work = {
   year: string;
   location: string;
   image: string;
+  thumb: string; // smaller copy of the cover for the gallery and lists
   images: string[]; // every photo for the project page strip (cover first)
   ratio: number; // width / height
   video?: string; // optional loop that plays when you stand in front of the stand
   body: { heading: string; paragraphs: string[]; quote?: { text: string; by: string } };
 };
 
-type Media = { cover?: string; images?: string[]; video?: string; client?: string; year?: string; location?: string; about?: string; ratio?: number };
+type Media = { cover?: string; thumb?: string; images?: string[]; video?: string; client?: string; year?: string; location?: string; about?: string; ratio?: number };
 const M = media as Record<string, Media>;
 
 export const categories = ["TV & studio sets", "Stages & shows", "Red carpets & events", "Brand activations", "Radio studios", "Kiosks, prefabs & interiors"] as const;
@@ -77,6 +78,7 @@ const mk = (folder: string, title: string, cat: Cat, services: string, blurb: st
     year: m.year || extra.year || "",
     location: m.location || extra.location || "Lagos, Nigeria",
     image: cover,
+    thumb: m.thumb || cover,
     images: m.images?.length ? m.images : [cover],
     ratio: m.ratio || extra.ratio || 4 / 3,
     video: m.video,
@@ -84,10 +86,9 @@ const mk = (folder: string, title: string, cat: Cat, services: string, blurb: st
       heading: "The build",
       paragraphs: m.about
         ? m.about.split(/\n\s*\n/)
-        : [
-            `Photos and the full story for ${title} are on the way.`,
-            "This space is for the brief, the build schedule, the materials and the night it went live.",
-          ],
+        : m.images?.length
+          ? ["From the first 3D views to the finished build, the pictures on this page tell the story.", "A fuller write-up of the brief, the materials and the build is on the way."]
+          : [`Photos and the full story for ${title} are on the way.`, "This space is for the brief, the build schedule, the materials and the night it went live."],
     },
   };
 };

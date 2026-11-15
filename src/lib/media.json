@@ -5,7 +5,8 @@
     ],
     "ratio": 0.8727,
     "cover": "/projects/aff-set/01.jpg",
-    "video": "/projects/aff-set/video.mp4"
+    "video": "/projects/aff-set/video.mp4",
+    "thumb": "/projects/aff-set/thumb.jpg"
   },
   "ay-live-2018": {
     "images": [
@@ -13,7 +14,8 @@
     ],
     "ratio": 1.0146,
     "cover": "/projects/ay-live-2018/01.jpg",
-    "video": "/projects/ay-live-2018/video.mp4"
+    "video": "/projects/ay-live-2018/video.mp4",
+    "thumb": "/projects/ay-live-2018/thumb.jpg"
   },
   "big-talk-with-dsa": {
     "images": [
@@ -28,7 +30,8 @@
       "/projects/big-talk-with-dsa/09.jpg"
     ],
     "ratio": 1.4263,
-    "cover": "/projects/big-talk-with-dsa/01.jpg"
+    "cover": "/projects/big-talk-with-dsa/01.jpg",
+    "thumb": "/projects/big-talk-with-dsa/thumb.jpg"
   },
   "bottle-king": {
     "images": [
@@ -51,7 +54,8 @@
     ],
     "ratio": 1.0453,
     "cover": "/projects/bottle-king/01.jpg",
-    "video": "/projects/bottle-king/video.mp4"
+    "video": "/projects/bottle-king/video.mp4",
+    "thumb": "/projects/bottle-king/thumb.jpg"
   },
   "budweiser": {
     "images": [
@@ -63,7 +67,8 @@
       "/projects/budweiser/06.jpg"
     ],
     "ratio": 1.3789,
-    "cover": "/projects/budweiser/01.jpg"
+    "cover": "/projects/budweiser/01.jpg",
+    "thumb": "/projects/budweiser/thumb.jpg"
   },
   "hymnodia": {
     "images": [
@@ -78,7 +83,8 @@
     ],
     "ratio": 0.7724,
     "cover": "/projects/hymnodia/01.jpg",
-    "video": "/projects/hymnodia/video.mp4"
+    "video": "/projects/hymnodia/video.mp4",
+    "thumb": "/projects/hymnodia/thumb.jpg"
   },
   "interior-set": {
     "images": [
@@ -101,7 +107,8 @@
     ],
     "ratio": 1.3333,
     "cover": "/projects/interior-set/01.jpg",
-    "video": "/projects/interior-set/video.mp4"
+    "video": "/projects/interior-set/video.mp4",
+    "thumb": "/projects/interior-set/thumb.jpg"
   },
   "kiosk": {
     "images": [
@@ -110,7 +117,8 @@
       "/projects/kiosk/03.jpg"
     ],
     "ratio": 1.414,
-    "cover": "/projects/kiosk/01.jpg"
+    "cover": "/projects/kiosk/01.jpg",
+    "thumb": "/projects/kiosk/thumb.jpg"
   },
   "mbgn": {
     "images": [
@@ -132,7 +140,8 @@
       "/projects/mbgn/16.jpg"
     ],
     "ratio": 2.1818,
-    "cover": "/projects/mbgn/01.jpg"
+    "cover": "/projects/mbgn/01.jpg",
+    "thumb": "/projects/mbgn/thumb.jpg"
   },
   "nsia": {
     "images": [
@@ -142,14 +151,16 @@
       "/projects/nsia/04.jpg"
     ],
     "ratio": 1.7804,
-    "cover": "/projects/nsia/01.jpg"
+    "cover": "/projects/nsia/01.jpg",
+    "thumb": "/projects/nsia/thumb.jpg"
   },
   "others": {
     "images": [
       "/projects/others/01.jpg"
     ],
     "ratio": 1.0129,
-    "cover": "/projects/others/01.jpg"
+    "cover": "/projects/others/01.jpg",
+    "thumb": "/projects/others/thumb.jpg"
   },
   "ovation-red-carol": {
     "images": [
@@ -157,7 +168,8 @@
     ],
     "ratio": 1.0094,
     "cover": "/projects/ovation-red-carol/01.jpg",
-    "video": "/projects/ovation-red-carol/video.mp4"
+    "video": "/projects/ovation-red-carol/video.mp4",
+    "thumb": "/projects/ovation-red-carol/thumb.jpg"
   },
   "prefabs": {
     "images": [
@@ -165,7 +177,8 @@
       "/projects/prefabs/02.jpg"
     ],
     "ratio": 1.0927,
-    "cover": "/projects/prefabs/01.jpg"
+    "cover": "/projects/prefabs/01.jpg",
+    "thumb": "/projects/prefabs/thumb.jpg"
   },
   "radio-now": {
     "images": [
@@ -183,7 +196,8 @@
     ],
     "ratio": 0.75,
     "cover": "/projects/radio-now/01.jpg",
-    "video": "/projects/radio-now/video.mp4"
+    "video": "/projects/radio-now/video.mp4",
+    "thumb": "/projects/radio-now/thumb.jpg"
   },
   "rhythm-fm": {
     "images": [
@@ -200,7 +214,8 @@
     ],
     "ratio": 0.8155,
     "cover": "/projects/rhythm-fm/01.jpg",
-    "video": "/projects/rhythm-fm/video.mp4"
+    "video": "/projects/rhythm-fm/video.mp4",
+    "thumb": "/projects/rhythm-fm/thumb.jpg"
   },
   "silverbird-tv-sets": {
     "images": [
@@ -222,7 +237,8 @@
       "/projects/silverbird-tv-sets/16.jpg"
     ],
     "ratio": 1.3442,
-    "cover": "/projects/silverbird-tv-sets/01.jpg"
+    "cover": "/projects/silverbird-tv-sets/01.jpg",
+    "thumb": "/projects/silverbird-tv-sets/thumb.jpg"
   },
   "talk-active-with-kike": {
     "images": [
@@ -237,7 +253,8 @@
     ],
     "ratio": 1.8026,
     "cover": "/projects/talk-active-with-kike/01.jpg",
-    "video": "/projects/talk-active-with-kike/video.mp4"
+    "video": "/projects/talk-active-with-kike/video.mp4",
+    "thumb": "/projects/talk-active-with-kike/thumb.jpg"
   },
   "uba-ceo-awards-2019-silver-carpet": {
     "images": [
@@ -247,6 +264,7 @@
     ],
     "ratio": 1.414,
     "cover": "/projects/uba-ceo-awards-2019-silver-carpet/01.jpg",
-    "video": "/projects/uba-ceo-awards-2019-silver-carpet/video.mp4"
+    "video": "/projects/uba-ceo-awards-2019-silver-carpet/video.mp4",
+    "thumb": "/projects/uba-ceo-awards-2019-silver-carpet/thumb.jpg"
   }
 }

@@ -435,7 +435,7 @@ function Room({
               style={{ left: px(-it.w / 2), top: px(top), width: px(it.w), height: px(it.h), boxShadow: `0 0 0 ${px(L.frameT)} var(--panel)` }}
               onClick={(e) => onOpen(w, e.currentTarget)}
             >
-              <img src={w.image} alt="" draggable={false} decoding="async" />
+              <img src={w.thumb} alt="" draggable={false} decoding="async" />
               {!L.phone && w.video && <video data-item-video={idx} src={w.video} muted loop playsInline preload="none" />}
             </button>
             {/* number tab clipped to the top corner of the panel */}

@@ -49,6 +49,7 @@
 .g-wall-piece { pointer-events: none; }
 .g-facade { background: var(--bg); pointer-events: none; }
 .g-drift {
+  display: none; /* off: this wall-long animated layer painted over some stands (blank frames) in Chromium 3D sorting */
   left: 0;
   top: 0;
   overflow: hidden;

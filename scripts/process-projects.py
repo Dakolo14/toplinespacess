@@ -90,6 +90,9 @@ for name in sorted(os.listdir(SRC)):
                 m["ratio"] = round(r, 4)
             m["images"].append(f"/projects/{slug}/{dst}")
         m["cover"] = m["images"][0]
+        th = Image.open(os.path.join(out, "01.jpg")); th.thumbnail((1000, 1000), Image.LANCZOS)
+        th.save(os.path.join(out, "thumb.jpg"), "JPEG", quality=78, optimize=True, progressive=True)
+        m["thumb"] = f"/projects/{slug}/thumb.jpg"
     if videos:
         v = os.path.join(folder, videos[0])
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", v, "-t", "20", "-an", "-vf",
