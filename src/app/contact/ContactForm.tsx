@@ -5,8 +5,8 @@ import { site } from "@/lib/content";
 import { Fade, Lines } from "@/components/ui/Reveal";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const NEEDS = ["A film", "Photography", "An identity", "A website", "Something else"];
-const BUDGETS = ["Under $10k", "$10k to $25k", "$25k to $50k", "Over $50k"]; // PLACEHOLDER ranges
+const NEEDS = ["Stage design", "TV set", "Corporate event", "Party or event", "Radio studio", "Interior or kiosk", "Something else"];
+const BUDGETS = ["Under ₦5m", "₦5m to ₦20m", "₦20m to ₦50m", "Over ₦50m", "Not sure yet"]; // PLACEHOLDER ranges
 
 function Clock() {
   const [now, setNow] = useState<Date | null>(null);
@@ -26,7 +26,31 @@ function Clock() {
 export default function ContactForm() {
   const [need, setNeed] = useState<string[]>([]);
   const [budget, setBudget] = useState("");
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const sent = status === "sent";
+  const submit = async (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
+    if (status === "sending") return;
+    const f = new FormData(ev.currentTarget);
+    const get = (k: string) => String(f.get(k) ?? "");
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: get("name"), email: get("email"), phone: get("phone"), company: get("company"),
+          start: get("start"), message: get("message"), website: get("website"),
+          needs: need, budget, page: window.location.href,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      setStatus(res.ok && data.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+  const btn = status === "sending" ? "Sending…" : sent ? "Sent, thank you" : "Send it";
   const toggle = (n: string) => setNeed((a) => (a.includes(n) ? a.filter((x) => x !== n) : [...a, n]));
   return (
     <section className="ct wrap">
@@ -39,14 +63,18 @@ export default function ContactForm() {
         <Fade delay={0.2} className="ct-sub">Tell us what you’re making. We answer every brief within two working days.</Fade>
       </div>
       <Fade delay={0.1}>
-        <form className="ct-form" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+        <form className="ct-form" onSubmit={submit}>
+          <input className="ct-hp" name="website" tabIndex={-1} autoComplete="off" aria-hidden />
           <div className="ct-row two">
-            <label><span>Your name</span><input required placeholder="Your name" /></label>
-            <label><span>Email</span><input required type="email" placeholder="you@company.com" /></label>
+            <label><span>Your name</span><input name="name" required autoComplete="name" placeholder="Your name" /></label>
+            <label><span>Email</span><input name="email" required type="email" autoComplete="email" placeholder="you@company.com" /></label>
           </div>
           <div className="ct-row two">
-            <label><span>Company</span><input placeholder="Optional" /></label>
-            <label><span>When would you like to start</span><input placeholder="This spring" /></label>
+            <label><span>Phone or WhatsApp</span><input name="phone" type="tel" autoComplete="tel" placeholder="Optional" /></label>
+            <label><span>Company or brand</span><input name="company" autoComplete="organization" placeholder="Optional" /></label>
+          </div>
+          <div className="ct-row">
+            <label><span>Event or shoot date</span><input name="start" placeholder="e.g. March 2027" /></label>
           </div>
           <div className="ct-row">
             <span className="ct-l">What do you need</span>
@@ -57,17 +85,25 @@ export default function ContactForm() {
             <div className="ct-chips">{BUDGETS.map((n) => <Chip key={n} on={budget === n} onClick={() => setBudget(n)}>{n}</Chip>)}</div>
           </div>
           <div className="ct-row">
-            <label><span>Tell us about it</span><textarea rows={3} placeholder="A few lines are enough" /></label>
+            <label><span>Tell us about it</span><textarea name="message" rows={3} placeholder="The venue, the audience, the look you want" /></label>
           </div>
           <div className="ct-row ct-send">
-            <button type="submit" className="ct-btn">
+            <button type="submit" className="ct-btn" disabled={status === "sending" || sent}>
               <AnimatePresence mode="wait" initial={false}>
-                <motion.span key={String(sent)} initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "-100%" }} transition={{ duration: 0.45, ease: EASE }}>
-                  {sent ? "Sent, thank you" : "Send it"}
+                <motion.span key={btn} initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "-100%" }} transition={{ duration: 0.45, ease: EASE }}>
+                  {btn}
                 </motion.span>
               </AnimatePresence>
             </button>
-            <span className="label">We answer every brief within two working days.</span>
+            <span className="label" role="status">
+              {status === "error" ? (
+                <span className="ct-err">That didn’t go through. Please email us at <a href={`mailto:${site.email}`}>{site.email}</a>.</span>
+              ) : sent ? (
+                `Your brief is with us at ${site.email}. We’ll reply within two working days.`
+              ) : (
+                `Goes straight to ${site.email}. We answer within two working days.`
+              )}
+            </span>
           </div>
         </form>
       </Fade>
@@ -118,6 +154,10 @@ const css = `
 .ct-btn::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ink);transform-origin:0 50%;transition:transform .6s var(--ease-out)}
 .ct-btn:hover::after{transform:scaleX(.3)}
 .ct-btn span{display:block}
+.ct-btn:disabled{cursor:default}
+.ct-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.ct-err{color:#b3261e}.ct-err a{text-decoration:underline}
+.ct-form{position:relative}
 .ct-info{display:grid;grid-template-columns:repeat(3,1fr);margin-top:60px;padding-top:28px;border-top:1px solid #e3e3e3;font-size:13px;font-weight:600}
 .ct-info>div{display:flex;flex-direction:column;gap:8px}
 .ct-clock{display:flex;align-items:center;gap:8px;font-weight:500}

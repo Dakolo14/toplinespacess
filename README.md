@@ -37,3 +37,20 @@ To edit straight on the live site later, Keystatic needs a GitHub App:
 1. Run `npm run dev`, open /keystatic and follow Keystatic's "connect to GitHub" setup once (it creates the app), or create one by hand.
 2. On Vercel, set `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`, `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` and `KEYSTATIC_SECRET`, then redeploy.
 Until those are set, /keystatic on the live site just shows a note and edits nothing.
+
+## Contact form email
+
+The form on /contact sends each brief to **info@toplinespaces.com** (set in `site.email` in `src/lib/content.ts`). The email has the full brief, Reply / Call / WhatsApp buttons, and pressing Reply answers the client directly. The template is in `src/lib/enquiry-email.ts`.
+
+It sends through SMTP, so it needs the mailbox's SMTP details on Vercel (Project → Settings → Environment Variables), then a redeploy:
+
+| Variable | Example |
+| --- | --- |
+| `SMTP_HOST` | the mail host for info@toplinespaces.com, e.g. `mail.toplinespaces.com`, `smtp.zoho.com`, `smtp.gmail.com` or `smtp.resend.com` |
+| `SMTP_PORT` | `465` (default) or `587` |
+| `SMTP_USER` | `info@toplinespaces.com` (for Resend: `resend`) |
+| `SMTP_PASS` | the mailbox password, app password or API key |
+| `CONTACT_FROM` | optional, e.g. `TopLine Spaces Website <info@toplinespaces.com>` (needed with Resend) |
+| `CONTACT_TO` | optional, another inbox to receive briefs |
+
+Until these are set, the form tells visitors to email info@toplinespaces.com directly, so no brief is silently lost. For local testing, put the same values in `.env.local`.

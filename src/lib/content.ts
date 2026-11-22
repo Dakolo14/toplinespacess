@@ -9,7 +9,7 @@ export const site = {
   wordmark: "TopLine Spaces",
   // Drop the logo file into /public (e.g. /public/logo.svg) and set its path here. Empty = placeholder mark.
   logo: "",
-  email: "hello@toplinespaces.com", // PLACEHOLDER
+  email: "info@toplinespaces.com",
   hours: "Monday to Friday",
   hoursLong: "Monday to Friday, 09:00 to 18:00", // PLACEHOLDER
   addressLines: ["Workshop address line", "Lagos, Nigeria"], // PLACEHOLDER street address
