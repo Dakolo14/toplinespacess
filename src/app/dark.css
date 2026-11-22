@@ -134,7 +134,7 @@ html[data-theme="dark"] .ab-tl-axis .tick { background: #3a3632; }
 html[data-theme="dark"] .ab-tl-ev { border-left-color: #3a3632; }
 html[data-theme="dark"] .ab-member .pic { background: #2a2724; }
 
-/* smooth switch between modes, but never on first paint */
-html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
-  transition: background-color 0.45s ease, border-color 0.45s ease, color 0.3s ease, box-shadow 0.45s ease !important;
-}
+/* Mode switch: every element changes colour in the same instant (no element-by-element tweening),
+   and where supported the whole page cross-fades once. */
+html.theme-freeze, html.theme-freeze *, html.theme-freeze *::before, html.theme-freeze *::after { transition: none !important; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.35s; animation-timing-function: ease; }
