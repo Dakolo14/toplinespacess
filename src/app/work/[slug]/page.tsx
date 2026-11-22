@@ -14,5 +14,5 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { slug } = await params;
   const i = works.findIndex((x) => x.slug === slug);
   if (i < 0) notFound();
-  return <Project work={works[i]} next={works[(i + 1) % works.length]} />;
+  return <Project work={works[i]} prev={works[(i - 1 + works.length) % works.length]} next={works[(i + 1) % works.length]} />;
 }
