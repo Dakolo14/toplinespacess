@@ -15,14 +15,14 @@ type View = "index" | "sheet";
 // "Contact sheet" swaps to an even grid. On phones, "All" becomes one swipeable row per category.
 export default function WorkGrid({ cat = null }: { cat?: string | null }) {
   const router = useRouter();
-  const [view, setView] = useState<View>("index");
+  const [view, setView] = useState<View>("sheet");
   const [hover, setHover] = useState<Work | null>(null);
   const previewRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    try { const v = sessionStorage.getItem("topline-work-view"); if (v === "sheet" || v === "index") setView(v); } catch {}
+    try { const v = sessionStorage.getItem("topline-work-view-v2"); if (v === "sheet" || v === "index") setView(v); } catch {}
   }, []);
-  const pick = (v: View) => { setView(v); try { sessionStorage.setItem("topline-work-view", v); } catch {} };
+  const pick = (v: View) => { setView(v); try { sessionStorage.setItem("topline-work-view-v2", v); } catch {} };
 
   const cats = useMemo(() => categories.map((c) => ({ ...c, n: worksIn(c.slug).length })).filter((c) => c.n), []);
   const list = cat ? worksIn(cat) : works;
@@ -47,7 +47,7 @@ export default function WorkGrid({ cat = null }: { cat?: string | null }) {
           {current ? current.label : "All work"} <span className="wk-count">{list.length} {list.length === 1 ? "build" : "builds"}{current ? "" : ", Lagos and beyond"}</span>
         </motion.h1>
         <div className="wk-view" role="tablist" aria-label="Layout">
-          {(["index", "sheet"] as View[]).map((v) => (
+          {(["sheet", "index"] as View[]).map((v) => (
             <button key={v} role="tab" aria-selected={view === v} data-on={view === v || undefined} onClick={() => pick(v)}>
               {view === v && <motion.i layoutId="view-pill" className="pill-bg" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
               <span>{v === "index" ? "Rundown" : "Contact sheet"}</span>
