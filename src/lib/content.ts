@@ -12,7 +12,7 @@ export const site = {
   email: "info@toplinespaces.com",
   hours: "Monday to Friday",
   hoursLong: "Monday to Friday, 09:00 to 18:00", // PLACEHOLDER
-  addressLines: ["Workshop address line", "Lagos, Nigeria"], // PLACEHOLDER street address
+  addressLines: [] as string[], // street address hidden until the studio wants it public
   timeZone: "Africa/Lagos", // PLACEHOLDER: used for the live studio clock on Contact
   city: "Lagos",
   since: "2026", // PLACEHOLDER
