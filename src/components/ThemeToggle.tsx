@@ -1,14 +1,14 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-// Dark is the default. The visitor can pick Light, Dark or System (follow the device). The choice lives in
+// System (follow the device) is the default. The visitor can also pin Light or Dark. The choice lives in
 // localStorage and THEME_SCRIPT (in the root layout) applies it before first paint, so nothing flashes.
 export type Mode = "light" | "dark" | "system";
 export const THEME_KEY = "topline-theme";
-export const THEME_SCRIPT = `try{var m=localStorage.getItem("${THEME_KEY}");var t=m==="light"||m==="dark"?m:m==="system"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):"dark";document.documentElement.setAttribute("data-theme",t)}catch(e){}`;
+export const THEME_SCRIPT = `try{var m=localStorage.getItem("${THEME_KEY}");var t=m==="light"||m==="dark"?m:(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}`;
 
 const resolve = (m: Mode): "light" | "dark" =>
-  m === "system" ? (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : m;
+  m === "system" ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : m;
 
 // Swap colours in one clean step: freeze every CSS transition for a frame so nothing animates
 // piece by piece, and cross-fade the whole page where the browser supports view transitions.
@@ -34,7 +34,7 @@ const OPTIONS: { mode: Mode; label: string }[] = [
 ];
 
 export function ThemeToggle() {
-  const [mode, setMode] = useState<Mode>("dark");
+  const [mode, setMode] = useState<Mode>("system");
   const [shown, setShown] = useState<"light" | "dark">("dark");
   const [open, setOpen] = useState(false);
   const box = useRef<HTMLDivElement>(null);
@@ -42,16 +42,18 @@ export function ThemeToggle() {
   const viaMouse = useRef(false);
 
   useEffect(() => {
-    let m: Mode = "dark";
+    let m: Mode = "system";
     try { const s = localStorage.getItem(THEME_KEY); if (s === "light" || s === "dark" || s === "system") m = s; } catch {}
     setMode(m);
-    setShown(document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
+    const t = resolve(m);
+    if (document.documentElement.getAttribute("data-theme") !== t) document.documentElement.setAttribute("data-theme", t);
+    setShown(t);
   }, []);
 
   // "System" follows the device live, e.g. when the phone switches to dark at sunset
   useEffect(() => {
     if (mode !== "system") return;
-    const mq = window.matchMedia("(prefers-color-scheme: light)");
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const on = () => { const t = resolve("system"); apply(t); setShown(t); };
     mq.addEventListener("change", on);
     return () => mq.removeEventListener("change", on);
