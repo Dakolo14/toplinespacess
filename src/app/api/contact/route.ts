@@ -4,7 +4,7 @@ import { enquiryHtml, enquirySubject, enquiryText, type Enquiry } from "@/lib/en
 
 // Sends contact-form briefs to the studio inbox (info@toplinespaces.com).
 // Mail goes out over SMTP, so any provider works: the domain's own mailbox, Zoho, Google Workspace, or Resend.
-// Set SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS on Vercel (see README). CONTACT_TO overrides the inbox.
+// On Vercel only SMTP_PASS (the mailbox password) is required; host/port/user default to Hostinger. CONTACT_TO overrides the inbox.
 
 export const runtime = "nodejs";
 
@@ -35,8 +35,12 @@ export async function POST(req: Request) {
   };
   if (!e.name || !EMAIL.test(e.email)) return Response.json({ ok: false, error: "missing_fields" }, { status: 400 });
 
-  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
-  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
+  // Defaults match the Hostinger mailbox for info@toplinespaces.com, so only SMTP_PASS has to be set.
+  const SMTP_HOST = process.env.SMTP_HOST || "smtp.hostinger.com";
+  const SMTP_PORT = process.env.SMTP_PORT || "465";
+  const SMTP_USER = process.env.SMTP_USER || site.email;
+  const SMTP_PASS = process.env.SMTP_PASS;
+  if (!SMTP_PASS) {
     console.warn("[contact] SMTP is not configured; enquiry not sent:", enquirySubject(e));
     return Response.json({ ok: false, error: "not_configured" }, { status: 503 });
   }
