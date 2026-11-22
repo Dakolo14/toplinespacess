@@ -147,12 +147,12 @@ const css = `
 .ct-chip:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);transform:translateY(-2px);box-shadow:0 8px 18px -12px color-mix(in srgb,var(--accent) 80%,transparent)}
 .ct-chip:active{transform:translateY(0) scale(.97);transition-duration:.12s}
 .ct-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.ct-chip[data-on]{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+.ct-chip[data-on]{border-color:var(--accent);background:var(--accent);color:#fff}
 .ct-chip[data-on]:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
 .ct-chip i{width:10px;height:10px;border-radius:50%;border:1px solid #c9c9c9;display:grid;place-items:center;transition:border-color .3s,transform .4s var(--ease-out)}
 .ct-chip:hover i{border-color:var(--accent);transform:scale(1.15)}
-.ct-chip[data-on] i{border-color:var(--on-accent)}
-.ct-chip b{width:6px;height:6px;border-radius:50%;background:var(--on-accent)}
+.ct-chip[data-on] i{border-color:#fff}
+.ct-chip b{width:6px;height:6px;border-radius:50%;background:#fff}
 @media (hover:none){.ct-chip:hover{transform:none;box-shadow:none}.ct-chip:not([data-on]):hover{background:transparent;border-color:#d9d9d9}}
 @media (prefers-reduced-motion:reduce){.ct-chip,.ct-chip i{transition:none}.ct-chip:hover{transform:none}}
 .ct-send{display:flex;justify-content:space-between;align-items:center}
