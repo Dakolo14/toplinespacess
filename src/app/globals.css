@@ -9,7 +9,9 @@
   --menu: #f3efef;
   --floor: #e2ded6;
   --wall: #f2f1ee;
-  --accent: #0b8a55; /* Naija green */
+  --accent: #ff7a52; /* TopLine orange */
+  --accent-deep: #e8582c; /* hover / pressed */
+  --on-accent: #161412; /* text on orange: 7:1 contrast, white on this orange is only 2.6:1 */
   --panel: #1d1b18;
   --gutter: 44px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);

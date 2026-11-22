@@ -1,0 +1,175 @@
+{
+  "projects": [
+    {
+      "title": "MBGN",
+      "category": "stage-design",
+      "services": "Pageant set",
+      "blurb": "A gold-and-black set for MBGN: a curved judges' desk, a runway with the crown emblem and patterned light towers.",
+      "onHomeGallery": true,
+      "slug": "mbgn",
+      "folder": "MBGN"
+    },
+    {
+      "title": "Big Talk with DSA",
+      "category": "television",
+      "services": "Talk show set",
+      "blurb": "A talk show set for Big Talk with Dr. Stephen Akintayo: raised stage, guest desks, brick and neon flats and a live screen wall.",
+      "onHomeGallery": true,
+      "slug": "big-talk-with-dsa",
+      "folder": "BIG TALK WITH DSA"
+    },
+    {
+      "title": "Bottle King",
+      "category": "corporate",
+      "services": "Brand tunnel",
+      "blurb": "An entrance tunnel for Bottle King: giant patterned bottles, a crown-cork wall and six light moods to choose from.",
+      "onHomeGallery": true,
+      "slug": "bottle-king",
+      "folder": "BOTTLE KING"
+    },
+    {
+      "title": "UBA CEO Awards 2019",
+      "category": "corporate",
+      "services": "Silver carpet tunnel",
+      "client": "UBA",
+      "year": "2019",
+      "blurb": "A silver carpet for the UBA CEO Awards 2019: guests walk in through a tunnel of lit rings.",
+      "onHomeGallery": true,
+      "slug": "uba-ceo-awards-2019-silver-carpet",
+      "folder": "UBA CEO AWARDS 2019 SILVER CARPET"
+    },
+    {
+      "title": "Silverbird TV Sets",
+      "category": "television",
+      "services": "TV studio sets",
+      "client": "Silverbird Television",
+      "year": "2015–2018",
+      "location": "Lagos and Abuja",
+      "blurb": "Studio sets for Silverbird Television: the Morning Show and a talk corner in Lagos, and the STV newsroom in Abuja.",
+      "onHomeGallery": true,
+      "slug": "silverbird-tv-sets",
+      "folder": "SILVERBIRD TV SETS"
+    },
+    {
+      "title": "Rhythm FM",
+      "category": "radio",
+      "services": "Radio studio fit-out",
+      "blurb": "Studio and waiting area for Rhythm FM: padded wall panels, vinyl-record details, blue light and an Afro-print ceiling.",
+      "onHomeGallery": true,
+      "slug": "rhythm-fm",
+      "folder": "RHYTHM FM"
+    },
+    {
+      "title": "NSIA",
+      "category": "stage-design",
+      "services": "Awards stage",
+      "client": "Nigeria Skits Industry Awards",
+      "blurb": "A gold-star awards stage for the Nigeria Skits Industry Awards, with a lit runway out into the crowd.",
+      "onHomeGallery": true,
+      "slug": "nsia",
+      "folder": "NSIA"
+    },
+    {
+      "title": "Budweiser",
+      "category": "parties-events",
+      "services": "Red carpet, photo wall",
+      "blurb": "A King of Beers red carpet for Budweiser: angled light walls, a branded photo booth and the registration desk.",
+      "onHomeGallery": true,
+      "slug": "budweiser",
+      "folder": "BUDWEISER"
+    },
+    {
+      "title": "AFF Set",
+      "category": "corporate",
+      "services": "Light-box stage",
+      "client": "Africa Fintech Foundry",
+      "blurb": "A stage of tilted colour light boxes for the Africa Fintech Foundry.",
+      "onHomeGallery": true,
+      "slug": "aff-set",
+      "folder": "AFF SET"
+    },
+    {
+      "title": "Hymnodia",
+      "category": "stage-design",
+      "services": "TV stage",
+      "year": "2019",
+      "blurb": "Light-box steps, a red runway and a full choir on camera for Hymnodia.",
+      "onHomeGallery": false,
+      "slug": "hymnodia",
+      "folder": "HYMNODIA"
+    },
+    {
+      "title": "Talk Active with Kike",
+      "category": "television",
+      "services": "Talk show set",
+      "blurb": "A warm talk show set with lit circle panels, gold frames and plants, built around conversation.",
+      "onHomeGallery": false,
+      "slug": "talk-active-with-kike",
+      "folder": "TALK ACTIVE WITH KIKE"
+    },
+    {
+      "title": "Interior Set",
+      "category": "interiors-kiosks",
+      "services": "Apartment interior",
+      "blurb": "A full apartment interior: mustard walls, velvet sofas, Afro-art prints and a lit slatted bedroom wall.",
+      "onHomeGallery": false,
+      "slug": "interior-set",
+      "folder": "INTERIOR SET"
+    },
+    {
+      "title": "AY Live 2018",
+      "category": "stage-design",
+      "services": "Concert stage",
+      "year": "2018",
+      "blurb": "The main stage for AY Live 2018: LED walls, truss, a mirrored runway and a lot of light.",
+      "onHomeGallery": false,
+      "slug": "ay-live-2018",
+      "folder": "AY LIVE 2018"
+    },
+    {
+      "title": "Radio Now",
+      "category": "radio",
+      "services": "Station fit-out",
+      "blurb": "A wall of radios in yellow cubbies for Radio Now 95.3 FM, plus the layout of the station around it.",
+      "onHomeGallery": false,
+      "slug": "radio-now",
+      "folder": "RADIO NOW"
+    },
+    {
+      "title": "Ovation Red Carol",
+      "category": "stage-design",
+      "services": "Carol stage",
+      "blurb": "White tiered risers and light panels for Ovation Red Carol, first in 3D and then on the night.",
+      "onHomeGallery": false,
+      "slug": "ovation-red-carol",
+      "folder": "OVATION RED CAROL"
+    },
+    {
+      "title": "Kiosks",
+      "category": "interiors-kiosks",
+      "services": "Mall kiosks",
+      "blurb": "Mall kiosks for Style Skins and Mobile Outfitters: curved white counters with the screens built in.",
+      "onHomeGallery": false,
+      "slug": "kiosk",
+      "folder": "KIOSK"
+    },
+    {
+      "title": "Prefabs",
+      "category": "interiors-kiosks",
+      "services": "Prefab columns",
+      "blurb": "Prefabricated columns, built in our workshop and raised on site.",
+      "onHomeGallery": false,
+      "slug": "prefabs",
+      "folder": "PREFABS"
+    },
+    {
+      "title": "Dinner & Awards Night",
+      "category": "parties-events",
+      "services": "Event set",
+      "blurb": "A dinner and awards night set with lit, angled panels across the stage.",
+      "onHomeGallery": false,
+      "slug": "others",
+      "folder": "OTHERS"
+    }
+  ]
+}

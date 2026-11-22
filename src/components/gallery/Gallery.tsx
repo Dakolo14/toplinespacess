@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { computeLayout, easeIO, enterPose, nearestStop, poseAt, type Layout, type Pose, type WallId } from "@/lib/gallery";
 import { galleryWorks, site, type Work } from "@/lib/content";
 import { zoomToPage } from "@/lib/zoom";
@@ -86,6 +87,9 @@ export default function Gallery() {
     else ajarTimer.current = setTimeout(() => { ajarRef.current = false; ajarTimer.current = null; }, 160);
   };
   const works = galleryWorks;
+  // on-screen controls for inside the room: where you are, and buttons for people who don't scroll
+  const [hud, setHud] = useState(-1);
+  const ctl = useRef<{ step: (d: number) => void; back: () => void } | null>(null);
 
   const viewRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
@@ -187,6 +191,7 @@ export default function Gallery() {
     const setActive = (i: number) => {
       if (i === s.active) return;
       s.active = i;
+      if (i >= 0) setHud(i);
       const stop = L.stops[i];
       workEls.forEach((el) => el.classList.toggle("on", stop?.item !== undefined && Number(el.dataset.item) === stop.item));
       signEls.forEach((el) => el.classList.toggle("on", !!stop?.end));
@@ -287,14 +292,30 @@ export default function Gallery() {
       s.over = 0;
       nudge(d);
     };
-    let ty = 0;
-    const onTouchStart = (e: TouchEvent) => { ty = e.touches[0].clientY; };
+    // touch: swipe along either axis (left or up = forward). Pulling back at the first stand
+    // walks you out to the doors, the same as scrolling up with a wheel.
+    let tx = 0, ty = 0, t0x = 0, t0y = 0, axis: "x" | "y" | null = null;
+    const onTouchStart = (e: TouchEvent) => {
+      tx = t0x = e.touches[0].clientX; ty = t0y = e.touches[0].clientY; axis = null; s.over = 0;
+    };
     const onTouchMove = (e: TouchEvent) => {
+      const x = e.touches[0].clientX, y = e.touches[0].clientY;
+      if (s.phase === "intro") {
+        if (t0y - y > 60 && Math.abs(t0y - y) > Math.abs(t0x - x)) { e.preventDefault(); enter(); }
+        return;
+      }
       if (s.phase !== "inside") return;
       e.preventDefault();
-      const y = e.touches[0].clientY;
-      nudge((ty - y) * 2.4);
-      ty = y;
+      if (!axis && Math.hypot(x - t0x, y - t0y) > 8) axis = Math.abs(x - t0x) > Math.abs(y - t0y) ? "x" : "y";
+      if (!axis) return;
+      const d = (axis === "x" ? tx - x : ty - y) * (axis === "x" ? 2.8 : 2.4);
+      tx = x; ty = y;
+      if (s.target <= 0.5 && d < 0) {
+        s.over += -d;
+        if (s.over > 320) { s.over = 0; leave(); }
+        return;
+      }
+      nudge(d);
     };
     const step = (dir: number) => {
       const i = nearestStop(L, s.target);
@@ -302,6 +323,10 @@ export default function Gallery() {
       s.lastInput = 0;
       s.anchor = -1;
       s.target = L.stops[j].s;
+    };
+    ctl.current = {
+      step: (d: number) => { if (d < 0 && nearestStop(L, s.target) === 0) leave(); else step(d); },
+      back: () => leave(),
     };
     const onKey = (e: KeyboardEvent) => {
       if (s.phase === "intro" && (e.key === "Enter" || e.key === "ArrowDown")) return enter();
@@ -357,8 +382,8 @@ export default function Gallery() {
         <button
           className="g-cta"
           onClick={enter}
-          onPointerEnter={() => setAjar(true)}
-          onPointerMove={() => setAjar(true)}
+          onPointerEnter={(e) => e.pointerType === "mouse" && setAjar(true)}
+          onPointerMove={(e) => e.pointerType === "mouse" && setAjar(true)}
           onPointerLeave={() => setAjar(false)}
           onFocus={() => setAjar(true)}
           onBlur={() => setAjar(false)}
@@ -367,9 +392,10 @@ export default function Gallery() {
         </button>
         <p className="g-blurb">{site.intro.blurb}</p>
       </div>
+      {L && <Hud L={L} works={works} at={hud} show={phase === "inside"} ctl={ctl} onOpen={(w) => router.push(`/work/${w.slug}`)} />}
       {/* pointermove as well as enter: if the page loads with the cursor already over the doors,
           no enter event ever fires, and the doors would never open on hover */}
-      <div className="g-hit" onClick={enter} onPointerEnter={() => setAjar(true)} onPointerMove={() => setAjar(true)} onPointerLeave={() => setAjar(false)} />
+      <div className="g-hit" onClick={enter} onPointerEnter={(e) => e.pointerType === "mouse" && setAjar(true)} onPointerMove={(e) => e.pointerType === "mouse" && setAjar(true)} onPointerLeave={() => setAjar(false)} />
     </div>
   );
 }
@@ -562,6 +588,42 @@ function Headline({ L, side }: { L: Layout; side: number }) {
       {site.intro.headline.map((l, i) => (
         <span className="ln" key={l}><span style={{ transitionDelay: `${0.25 + i * 0.07}s` }}>{l}</span></span>
       ))}
+    </div>
+  );
+}
+
+// Bottom bar inside the room: back to the doors, previous / next stand, where you are, open.
+function Hud({ L, works, at, show, ctl, onOpen }: {
+  L: Layout; works: Work[]; at: number; show: boolean;
+  ctl: React.RefObject<{ step: (d: number) => void; back: () => void } | null>;
+  onOpen: (w: Work) => void;
+}) {
+  const stop = L.stops[Math.max(0, at)];
+  const w = stop?.item !== undefined ? works[L.items[stop.item].k] : undefined;
+  const last = L.stops.length - 1;
+  const i = Math.max(0, at);
+  return (
+    <div className="g-hud" data-show={show || undefined} aria-hidden={!show}>
+      <button className="g-hud-back" onClick={() => ctl.current?.back()} tabIndex={show ? 0 : -1}>
+        <i aria-hidden>↑</i><span>Entrance</span>
+      </button>
+      <div className="g-hud-bar">
+        <button className="g-hud-arr" onClick={() => ctl.current?.step(-1)} aria-label={i === 0 ? "Back to the entrance" : "Previous project"} tabIndex={show ? 0 : -1}>←</button>
+        <div className="g-hud-mid" aria-live="polite">
+          <span className="g-hud-no">{String(Math.min(i + 1, works.length)).padStart(2, "0")}<em>/ {String(works.length).padStart(2, "0")}</em></span>
+          {w ? (
+            <button className="g-hud-open" onClick={() => onOpen(w)} tabIndex={show ? 0 : -1}>
+              <strong>{w.title}</strong><span>Open project →</span>
+            </button>
+          ) : (
+            <span className="g-hud-end"><Link href="/work/">All work</Link><Link href="/about/">About us</Link></span>
+          )}
+        </div>
+        <button className="g-hud-arr" onClick={() => ctl.current?.step(1)} disabled={i >= last} aria-label="Next project" tabIndex={show ? 0 : -1}>→</button>
+      </div>
+      <div className="g-hud-dots" aria-hidden>
+        {L.stops.map((_, k) => <i key={k} data-on={k === i || undefined} />)}
+      </div>
     </div>
   );
 }

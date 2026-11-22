@@ -9,7 +9,7 @@ export const site = {
   wordmark: "TopLine Spaces",
   // Drop the logo file into /public (e.g. /public/logo.svg) and set its path here. Empty = placeholder mark.
   logo: "",
-  email: "hello@toplinespaces.com", // PLACEHOLDER
+  email: "info@toplinespaces.com",
   hours: "Monday to Friday",
   hoursLong: "Monday to Friday, 09:00 to 18:00", // PLACEHOLDER
   addressLines: ["Workshop address line", "Lagos, Nigeria"], // PLACEHOLDER street address
@@ -43,7 +43,9 @@ export type Work = {
   no: string; // running number, shown on the stand plates and the index
   title: string;
   services: string; // short type line, shown on the stand plate in the gallery
-  tags: string[]; // the category used by the Work filters
+  category: string; // category slug, see `categories`
+  tags: string[]; // category label(s), shown on rows and plates
+  onHomeGallery: boolean;
   blurb: string;
   client: string;
   year: string;
@@ -59,66 +61,73 @@ export type Work = {
 type Media = { cover?: string; thumb?: string; images?: string[]; video?: string; client?: string; year?: string; location?: string; about?: string; ratio?: number };
 const M = media as Record<string, Media>;
 
-export const categories = ["TV & studio sets", "Stages & shows", "Red carpets & events", "Brand activations", "Radio studios", "Kiosks, prefabs & interiors"] as const;
-type Cat = (typeof categories)[number];
+// Project texts live in src/content/projects.json and are edited from the admin (/keystatic).
+// Photos and films still come from the Desktop folders via `npm run sync-projects` (media.json).
+import projectData from "../content/projects.json";
 
-const mk = (folder: string, title: string, cat: Cat, services: string, blurb: string, extra: Partial<Work> = {}): Work => {
-  const slug = folder.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+export const categories = [
+  { slug: "stage-design", label: "Stage Design", short: "Stage" },
+  { slug: "television", label: "Television", short: "TV" },
+  { slug: "corporate", label: "Corporate", short: "Corporate" },
+  { slug: "parties-events", label: "Parties & Events", short: "Events" },
+  { slug: "radio", label: "Radio Studios", short: "Radio" },
+  { slug: "interiors-kiosks", label: "Interiors & Kiosks", short: "Interiors" },
+] as const;
+export type CategorySlug = (typeof categories)[number]["slug"];
+export const categoryLabel = (slug: string) => categories.find((c) => c.slug === slug)?.label ?? slug;
+
+type ProjectEntry = {
+  slug: string; folder: string; title: string; category: string; services: string;
+  client?: string; year?: string; location?: string; blurb: string;
+  story?: string; quote?: string; quoteBy?: string; onHomeGallery?: boolean;
+};
+
+const paragraphs = (t?: string) => (t || "").split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
+
+const mk = (e: ProjectEntry, i: number): Work => {
+  const slug = e.slug;
   const m = M[slug] || {};
   const cover = m.cover || `/projects/${slug}/cover.svg`;
+  const story = paragraphs(e.story);
+  const fromFolder = paragraphs(m.about);
   return {
     slug,
-    folder,
-    no: "",
-    title,
-    services,
-    tags: [cat],
-    blurb,
-    client: m.client || extra.client || title,
-    year: m.year || extra.year || "",
-    location: m.location || extra.location || "Lagos, Nigeria",
+    folder: e.folder,
+    no: String(i + 1).padStart(2, "0"),
+    title: e.title,
+    services: e.services,
+    category: e.category,
+    tags: [categoryLabel(e.category)],
+    blurb: e.blurb,
+    client: e.client || m.client || e.title,
+    year: e.year || m.year || "",
+    location: e.location || m.location || "Lagos, Nigeria",
     image: cover,
     thumb: m.thumb || cover,
     images: m.images?.length ? m.images : [cover],
-    ratio: m.ratio || extra.ratio || 4 / 3,
+    ratio: m.ratio || 4 / 3,
     video: m.video,
+    onHomeGallery: e.onHomeGallery === true,
     body: {
       heading: "The build",
-      paragraphs: m.about
-        ? m.about.split(/\n\s*\n/)
-        : m.images?.length
-          ? ["From the first 3D views to the finished build, the pictures on this page tell the story.", "A fuller write-up of the brief, the materials and the build is on the way."]
-          : [`Photos and the full story for ${title} are on the way.`, "This space is for the brief, the build schedule, the materials and the night it went live."],
+      paragraphs: story.length
+        ? story
+        : fromFolder.length
+          ? fromFolder
+          : m.images?.length
+            ? ["From the first 3D views to the finished build, the pictures on this page tell the story.", "A fuller write-up of the brief, the materials and the build is on the way."]
+            : [`Photos and the full story for ${e.title} are on the way.`, "This space is for the brief, the build schedule, the materials and the night it went live."],
+      quote: e.quote ? { text: e.quote, by: e.quoteBy || "" } : undefined,
     },
   };
 };
 
-// Order here = order in the gallery and the Work index.
-const list: Work[] = [
-  mk("MBGN", "MBGN", "Stages & shows", "Pageant set", "A gold-and-black set for MBGN: a curved judges' desk, a runway with the crown emblem and patterned light towers."),
-  mk("BIG TALK WITH DSA", "Big Talk with DSA", "TV & studio sets", "Talk show set", "A talk show set for Big Talk with Dr. Stephen Akintayo: raised stage, guest desks, brick and neon flats and a live screen wall."),
-  mk("BOTTLE KING", "Bottle King", "Brand activations", "Brand tunnel", "An entrance tunnel for Bottle King: giant patterned bottles, a crown-cork wall and six light moods to choose from."),
-  mk("UBA CEO AWARDS 2019 SILVER CARPET", "UBA CEO Awards 2019", "Red carpets & events", "Silver carpet tunnel", "A silver carpet for the UBA CEO Awards 2019: guests walk in through a tunnel of lit rings.", { year: "2019" }),
-  mk("SILVERBIRD TV SETS", "Silverbird TV Sets", "TV & studio sets", "TV studio sets", "Studio sets for Silverbird Television: the Morning Show and a talk corner in Lagos, and the STV newsroom in Abuja.", { year: "2015–2018", location: "Lagos and Abuja" }),
-  mk("RHYTHM FM", "Rhythm FM", "Radio studios", "Radio studio fit-out", "Studio and waiting area for Rhythm FM: padded wall panels, vinyl-record details, blue light and an Afro-print ceiling."),
-  mk("NSIA", "NSIA", "Stages & shows", "Awards stage", "A gold-star awards stage for the Nigeria Skits Industry Awards, with a lit runway out into the crowd."),
-  mk("BUDWEISER", "Budweiser", "Red carpets & events", "Red carpet, photo wall", "A King of Beers red carpet for Budweiser: angled light walls, a branded photo booth and the registration desk."),
-  mk("AFF SET", "AFF Set", "Stages & shows", "Light-box stage", "A stage of tilted colour light boxes for the Africa Fintech Foundry."),
-  mk("HYMNODIA", "Hymnodia", "Stages & shows", "TV stage", "Light-box steps, a red runway and a full choir on camera for Hymnodia.", { year: "2019" }),
-  mk("TALK ACTIVE WITH KIKE", "Talk Active with Kike", "TV & studio sets", "Talk show set", "A warm talk show set with lit circle panels, gold frames and plants, built around conversation."),
-  mk("INTERIOR SET", "Interior Set", "Kiosks, prefabs & interiors", "Apartment interior", "A full apartment interior: mustard walls, velvet sofas, Afro-art prints and a lit slatted bedroom wall."),
-  mk("AY LIVE 2018", "AY Live 2018", "Stages & shows", "Concert stage", "The main stage for AY Live 2018: LED walls, truss, a mirrored runway and a lot of light.", { year: "2018" }),
-  mk("RADIO NOW", "Radio Now", "Radio studios", "Station fit-out", "A wall of radios in yellow cubbies for Radio Now 95.3 FM, plus the layout of the station around it."),
-  mk("OVATION RED CAROL", "Ovation Red Carol", "Stages & shows", "Carol stage", "White tiered risers and light panels for Ovation Red Carol, first in 3D and then on the night."),
-  mk("KIOSK", "Kiosks", "Kiosks, prefabs & interiors", "Mall kiosks", "Mall kiosks for Style Skins and Mobile Outfitters: curved white counters with the screens built in."),
-  mk("PREFABS", "Prefabs", "Kiosks, prefabs & interiors", "Prefab columns", "Prefabricated columns, built in our workshop and raised on site."),
-  mk("OTHERS", "Dinner & Awards Night", "Red carpets & events", "Event set", "A dinner and awards night set with lit, angled panels across the stage."),
-];
-list.forEach((w, i) => (w.no = String(i + 1).padStart(2, "0")));
-export const works = list;
+// Order in projects.json = order in the gallery and on the Work page.
+export const works: Work[] = (projectData.projects as ProjectEntry[]).map(mk);
+export const worksIn = (cat: string) => works.filter((w) => w.category === cat);
 
-// The gallery shows the first nine, three to a wall.
-export const galleryWorks = works.slice(0, 9);
+// The 3D gallery on the home page shows up to nine projects ticked "On home gallery", three to a wall.
+export const galleryWorks = works.filter((w) => w.onHomeGallery).slice(0, 9);
 
 export const about = {
   hangingWords: ["We", "Build", "Rooms", "People", "Remember", "Seeing"],
