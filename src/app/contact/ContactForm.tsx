@@ -143,11 +143,18 @@ const css = `
 .ct-row input:focus::placeholder,.ct-row textarea:focus::placeholder{color:#dcdcdc}
 .ct-row:focus-within,.ct-row.two label:focus-within{background:#fbfbfa}
 .ct-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.ct-chip{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px 0 14px;border:1px solid #d9d9d9;border-radius:999px;font-size:14px;font-weight:600;transition:border-color .3s,background .3s}
-.ct-chip:hover{border-color:#aaa}
-.ct-chip[data-on]{border-color:var(--ink);background:#fff}
-.ct-chip i{width:10px;height:10px;border-radius:50%;border:1px solid #c9c9c9;display:grid;place-items:center}
-.ct-chip b{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.ct-chip{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px 0 14px;border:1px solid #d9d9d9;border-radius:999px;font-size:14px;font-weight:600;color:var(--ink);background:transparent;transition:border-color .3s,background-color .3s,color .3s,transform .4s var(--ease-out),box-shadow .4s var(--ease-out)}
+.ct-chip:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);transform:translateY(-2px);box-shadow:0 8px 18px -12px color-mix(in srgb,var(--accent) 80%,transparent)}
+.ct-chip:active{transform:translateY(0) scale(.97);transition-duration:.12s}
+.ct-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ct-chip[data-on]{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+.ct-chip[data-on]:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.ct-chip i{width:10px;height:10px;border-radius:50%;border:1px solid #c9c9c9;display:grid;place-items:center;transition:border-color .3s,transform .4s var(--ease-out)}
+.ct-chip:hover i{border-color:var(--accent);transform:scale(1.15)}
+.ct-chip[data-on] i{border-color:var(--on-accent)}
+.ct-chip b{width:6px;height:6px;border-radius:50%;background:var(--on-accent)}
+@media (hover:none){.ct-chip:hover{transform:none;box-shadow:none}.ct-chip:not([data-on]):hover{background:transparent;border-color:#d9d9d9}}
+@media (prefers-reduced-motion:reduce){.ct-chip,.ct-chip i{transition:none}.ct-chip:hover{transform:none}}
 .ct-send{display:flex;justify-content:space-between;align-items:center}
 .ct-btn{position:relative;display:inline-flex;overflow:hidden;padding:0 0 6px 18px;font-size:24px;font-weight:600;letter-spacing:-.04em;height:40px}
 .ct-btn::before{content:"";position:absolute;left:0;top:13px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
