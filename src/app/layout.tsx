@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // Dark by default; THEME_SCRIPT switches to the visitor's saved choice before first paint.
+    // Follows the device (System) by default; THEME_SCRIPT sets the right mode before first paint.
     <html lang="en" className={inter.variable} data-theme="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
