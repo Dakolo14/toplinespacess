@@ -514,8 +514,13 @@ function Room({
             {/* number tab clipped to the top corner of the panel */}
             <div className="g-tab" style={{ left: px(it.w / 2 - L.frameT - 2), top: px(top - L.frameT) }}>{w.no}</div>
             <div className="g-cap" style={{ left: px(-it.w / 2 - L.frameT), top: px(top + it.h + L.frameT + 12), width: px(it.w + L.frameT * 2) }}>
-              <span className="ln"><span style={{ transitionDelay: "0.08s" }}>{w.title}</span></span>
-              <span className="ln g-cap-sub"><span style={{ transitionDelay: "0.14s" }}>{w.services}{w.year ? `, ${w.year}` : ""}</span></span>
+              <span className="g-cap-txt">
+                <span className="ln"><span style={{ transitionDelay: "0.08s" }}>{w.title}</span></span>
+                <span className="ln g-cap-sub"><span style={{ transitionDelay: "0.14s" }}>{w.services}{w.year ? `, ${w.year}` : ""}</span></span>
+              </span>
+              <button type="button" className="g-cap-open" onClick={(e) => onOpen(w, e.currentTarget)} aria-label={`Open project: ${w.title}`}>
+                <span>Open project</span><i aria-hidden>→</i>
+              </button>
             </div>
           </div>
         );

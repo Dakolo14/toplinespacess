@@ -160,7 +160,7 @@ function Carousel({ slides, title }: { slides: { src: string; video?: boolean }[
 const css = `
 .pj{position:relative;min-height:100vh;padding-top:104px;background:var(--bg)}
 .pj-x{position:fixed;right:20px;top:84px;width:44px;height:44px;z-index:40;display:grid;place-items:center;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);transition:background-color .3s}
-.pj-x:hover{background:var(--accent)}
+.pj-x:hover{background:var(--accent);color:var(--on-accent)}
 .pj-x i{position:absolute;width:16px;height:2px;background:var(--ink);transform:rotate(45deg);transition:transform .5s var(--ease-out)}
 .pj-x i+i{transform:rotate(-45deg)}
 .pj-x:hover i{transform:rotate(135deg)}.pj-x:hover i+i{transform:rotate(45deg)}
@@ -185,7 +185,7 @@ const css = `
 .pj-quote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--ink-3)}
 .pj-cta{display:inline-flex;align-items:center;gap:10px;margin-top:24px;height:48px;padding:0 22px;background:var(--accent);color:var(--on-accent);font-size:15px;font-weight:600;transition:background-color .3s,color .3s}
 .pj-cta i{font-style:normal;transition:transform .5s var(--ease-out)}
-.pj-cta:hover{background:var(--ink);color:#fff}.pj-cta:hover i{transform:translateX(4px)}
+.pj-cta:hover{background:var(--ink);color:var(--on-ink)}.pj-cta:hover i{transform:translateX(4px)}
 
 .pj-media{position:sticky;top:96px;align-self:start;min-width:0}
 .pj-screen{position:relative;background:#111;box-shadow:0 0 0 8px var(--panel)}
@@ -195,7 +195,7 @@ const css = `
 .pj-slide img,.pj-slide video{width:100%;height:100%;object-fit:contain;user-select:none}
 .pj-arrow{position:absolute;top:50%;width:48px;height:48px;margin-top:-24px;display:grid;place-items:center;background:var(--bg);font-size:18px;box-shadow:0 8px 20px -8px rgba(0,0,0,.4);transition:opacity .3s,background-color .3s,transform .4s var(--ease-out)}
 .pj-arrow.l{left:12px}.pj-arrow.r{right:12px}
-.pj-arrow:hover:not(:disabled){background:var(--accent)}
+.pj-arrow:hover:not(:disabled){background:var(--accent);color:var(--on-accent)}
 .pj-arrow.l:hover:not(:disabled){transform:translateX(-2px)}.pj-arrow.r:hover:not(:disabled){transform:translateX(2px)}
 .pj-arrow:disabled{opacity:0;pointer-events:none}
 .pj-bar{display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px;font-size:12px;color:var(--ink-3)}
@@ -225,7 +225,7 @@ const css = `
 .pj-next-txt strong{font-size:clamp(36px,4.4vw,64px);font-weight:600;letter-spacing:-.045em;line-height:.95}
 .pj-next-txt small{font-size:14px;color:var(--ink-2);font-weight:500}
 .pj-next-go{margin-top:16px;width:56px;height:56px;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font-size:20px;transition:transform .5s var(--ease-out),background-color .3s,color .3s}
-.pj-next:hover .pj-next-go{transform:translateX(8px);background:var(--ink);color:#fff}
+.pj-next:hover .pj-next-go{transform:translateX(8px);background:var(--ink);color:var(--on-ink)}
 .pj-prev{display:block;max-width:1440px;margin:32px auto 0;font-size:13px;font-weight:600;color:var(--ink-2);transition:color .25s}
 .pj-prev:hover{color:var(--ink)}
 

@@ -15,14 +15,14 @@ type View = "index" | "sheet";
 // "Contact sheet" swaps to an even grid. On phones, "All" becomes one swipeable row per category.
 export default function WorkGrid({ cat = null }: { cat?: string | null }) {
   const router = useRouter();
-  const [view, setView] = useState<View>("index");
+  const [view, setView] = useState<View>("sheet");
   const [hover, setHover] = useState<Work | null>(null);
   const previewRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    try { const v = sessionStorage.getItem("topline-work-view"); if (v === "sheet" || v === "index") setView(v); } catch {}
+    try { const v = sessionStorage.getItem("topline-work-view-v2"); if (v === "sheet" || v === "index") setView(v); } catch {}
   }, []);
-  const pick = (v: View) => { setView(v); try { sessionStorage.setItem("topline-work-view", v); } catch {} };
+  const pick = (v: View) => { setView(v); try { sessionStorage.setItem("topline-work-view-v2", v); } catch {} };
 
   const cats = useMemo(() => categories.map((c) => ({ ...c, n: worksIn(c.slug).length })).filter((c) => c.n), []);
   const list = cat ? worksIn(cat) : works;
@@ -47,7 +47,7 @@ export default function WorkGrid({ cat = null }: { cat?: string | null }) {
           {current ? current.label : "All work"} <span className="wk-count">{list.length} {list.length === 1 ? "build" : "builds"}{current ? "" : ", Lagos and beyond"}</span>
         </motion.h1>
         <div className="wk-view" role="tablist" aria-label="Layout">
-          {(["index", "sheet"] as View[]).map((v) => (
+          {(["sheet", "index"] as View[]).map((v) => (
             <button key={v} role="tab" aria-selected={view === v} data-on={view === v || undefined} onClick={() => pick(v)}>
               {view === v && <motion.i layoutId="view-pill" className="pill-bg" transition={{ type: "spring", stiffness: 500, damping: 40 }} />}
               <span>{v === "index" ? "Rundown" : "Contact sheet"}</span>
@@ -183,7 +183,7 @@ const css = `
 .wk-count{margin-left:10px;font-weight:500;color:var(--ink-3)}
 .wk-view{display:flex;padding:3px;background:var(--chip);border-radius:999px}
 .wk-view button{position:relative;padding:7px 14px;white-space:nowrap;font-size:12px;font-weight:600;color:var(--ink-3);transition:color .3s}
-.wk-view button[data-on]{color:#fff}
+.wk-view button[data-on]{color:var(--on-ink)}
 .wk-view button span{position:relative}
 .wk-view .pill-bg{position:absolute;inset:0;border-radius:999px;background:var(--ink)}
 .wk-filters{position:sticky;top:78px;z-index:30;margin:0 calc(var(--gutter) * -1) 28px;padding:8px var(--gutter);background:color-mix(in srgb,var(--bg) 94%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
@@ -223,7 +223,7 @@ a.wk-row:hover .wk-arrow{opacity:1;transform:none}
 .wk-cell img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease-out)}
 .wk-cell b{position:absolute;left:0;top:0;padding:6px 8px;background:var(--panel);color:#fff;font-size:11px;font-weight:700;transition:background .4s}
 .wk-sheet article:hover .wk-cell img{transform:scale(1.04)}
-.wk-sheet article:hover .wk-cell b{background:var(--accent)}
+.wk-sheet article:hover .wk-cell b{background:var(--accent);color:var(--on-accent)}
 .wk-sheet h2{margin-top:10px;font-size:17px;font-weight:600;letter-spacing:-.035em;line-height:1.1}
 .wk-sheet p{margin-top:3px;font-size:12px;color:var(--ink-3);font-weight:500}
 
@@ -239,7 +239,7 @@ a.wk-row:hover .wk-arrow{opacity:1;transform:none}
 .wk-mrow-h sup{font-size:11px;color:var(--ink-3);margin-left:3px}
 .wk-mrow-nav{display:flex;gap:6px}
 .wk-mrow-nav button{width:40px;height:40px;display:grid;place-items:center;background:var(--chip);font-size:16px;transition:background-color .3s,opacity .3s}
-.wk-mrow-nav button:not(:disabled):hover{background:var(--accent)}
+.wk-mrow-nav button:not(:disabled):hover{background:var(--accent);color:var(--on-accent)}
 .wk-mrow-nav button:disabled{opacity:.35;cursor:default}
 .wk-mrow-track{display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 calc(var(--gutter) * -1);padding:0 var(--gutter);scroll-padding:0 var(--gutter)}
 .wk-mrow-track::-webkit-scrollbar{display:none}
