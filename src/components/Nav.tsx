@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { categories, site, works, worksIn } from "@/lib/content";
 import Roll from "./Roll";
 import Logo from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
 
 const EASE_IO = [0.65, 0, 0.35, 1] as const;
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
@@ -97,6 +98,7 @@ export default function Nav() {
 
         <div className="nav-end">
           <Link href={site.bookCallHref} className="nav-cta roll-host"><Roll>Start a build</Roll></Link>
+          <ThemeToggle />
           <button className="nav-burger" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen((o) => !o)}>
             <i />
             <i />
@@ -187,9 +189,9 @@ const css = `
 .nav-peek img[data-on]{opacity:1;transform:none}
 .nav-peek em{position:absolute;left:0;bottom:0;padding:6px 9px;background:var(--accent);color:var(--on-accent);font-style:normal;font-size:12px;font-weight:700}
 
-.nav-end{flex:none;display:flex;align-items:center;gap:14px}
+.nav-end{flex:none;display:flex;align-items:center;gap:8px}
 .nav-cta{display:inline-flex;align-items:center;height:40px;padding:0 18px;background:var(--accent);color:var(--on-accent);font-size:14px;font-weight:600;transition:background-color .3s,color .3s}
-.nav-cta:hover,.nav-cta:focus-visible{background:var(--ink);color:#fff;outline:none}
+.nav-cta:hover,.nav-cta:focus-visible{background:var(--ink);color:var(--on-ink);outline:none}
 
 .nav-burger{display:none;width:44px;height:44px;place-items:center;position:relative}
 .nav-burger i{position:absolute;left:14px;width:16px;height:2px;background:var(--ink);transition:transform .5s var(--ease-out)}

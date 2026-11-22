@@ -1,0 +1,140 @@
+/* Dark mode: the default for TopLine Spaces. <html data-theme="dark"> is set on the server, and a tiny
+   script in <head> swaps to light before first paint if the visitor picked light (see ThemeToggle).
+   Tokens first, then the few page styles that use fixed light colours. */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121110;
+  --ink: #f3f1ee;
+  --ink-2: #bdb8b2;
+  --ink-3: #8b857e;
+  --ink-4: #5e5953;
+  --line: #2d2a27;
+  --chip: #201e1b;
+  --menu: #171614;
+  --floor: #23201c;
+  --wall: #1b1917;
+  --panel: #0b0a09;
+  --on-ink: #121110;
+  --accent-deep: #ff9470; /* on dark, the "deeper" orange reads better a touch lighter */
+}
+
+/* ---------- 3D gallery: a night exhibition hall ---------- */
+html[data-theme="dark"] .g-floor {
+  background:
+    radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.35)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.35) 1px, rgba(255, 255, 255, 0.03) 1px, rgba(255, 255, 255, 0.03) 2px, transparent 2px),
+    linear-gradient(rgba(0, 0, 0, 0.35) 1px, rgba(255, 255, 255, 0.03) 1px, rgba(255, 255, 255, 0.03) 2px, transparent 2px),
+    var(--floor);
+}
+html[data-theme="dark"] .g-ceil,
+html[data-theme="dark"] .g-root[data-phone] .g-ceil { background: linear-gradient(90deg, rgba(0, 0, 0, 0.3), transparent 5%, transparent 95%, rgba(0, 0, 0, 0.3)), #161513; }
+html[data-theme="dark"] .g-wall-piece {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.3), transparent 3%, transparent 97%, rgba(0, 0, 0, 0.3)),
+    linear-gradient(rgba(255, 255, 255, 0.04), transparent 38%, transparent 80%, rgba(0, 0, 0, 0.25)),
+    var(--wall);
+}
+html[data-theme="dark"] .g-root[data-phone] .g-wall-piece { background: var(--wall); }
+html[data-theme="dark"] .g-wall-piece.w0 { --wall: #1c1a18; }
+html[data-theme="dark"] .g-wall-piece.w1 { --wall: #1e1c19; }
+html[data-theme="dark"] .g-wall-piece.w2 { --wall: #1a1816; }
+html[data-theme="dark"] .g-rail { background: linear-gradient(#2a2724, #1a1816); }
+html[data-theme="dark"] .g-skirt { background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)); }
+html[data-theme="dark"] .g-seam { background: linear-gradient(90deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.15) 70%, rgba(255, 255, 255, 0.04)); }
+html[data-theme="dark"] .g-niche-back { background: radial-gradient(60% 60% at 50% 46%, #2a2622 0%, #211e1b 50%, #181614 100%); box-shadow: inset 0 0 60px rgba(255, 226, 190, 0.06); }
+html[data-theme="dark"] .g-niche-side.l { background: linear-gradient(90deg, #22201d, #161412); }
+html[data-theme="dark"] .g-niche-side.r { background: linear-gradient(270deg, #22201d, #141210); }
+html[data-theme="dark"] .g-niche-side.t { background: linear-gradient(#262421, #1c1a17); }
+html[data-theme="dark"] .g-niche-side.b { background: linear-gradient(0deg, #1e1c19, #141210); }
+html[data-theme="dark"] .g-ledge { background: linear-gradient(#2a2724, #141210); }
+/* spotlights: a warm pool of light around each work instead of a white wash */
+html[data-theme="dark"] .g-halo { background: radial-gradient(ellipse 50% 50% at 50% 42%, rgba(255, 226, 190, 0.16), rgba(255, 226, 190, 0.07) 38%, rgba(255, 226, 190, 0.02) 62%, transparent 76%); }
+html[data-theme="dark"] .g-pool { background: radial-gradient(50% 100% at 50% 0%, rgba(255, 226, 190, 0.12), transparent); }
+html[data-theme="dark"] .g-shadow { box-shadow: 0 34px 60px -20px rgba(0, 0, 0, 0.8), 0 8px 18px -4px rgba(0, 0, 0, 0.5); }
+html[data-theme="dark"] .g-frame { background: #24211e; }
+html[data-theme="dark"] .g-post { background: linear-gradient(90deg, #3a3631, #5a544c 45%, #2a2724); }
+html[data-theme="dark"] .g-foot { background: #2e2a26; }
+html[data-theme="dark"] .g-door-beyond { background: linear-gradient(#24211e, #1b1917 70%, #141210); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06); }
+html[data-theme="dark"] .g-door-leaf { background: linear-gradient(90deg, #1f1d1a, #191715); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+html[data-theme="dark"] .g-door-leaf .panel { border-color: rgba(255, 255, 255, 0.06); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04); }
+html[data-theme="dark"] .g-door-leaf .handle { background: linear-gradient(90deg, #8a8378, #c9c1b4 45%, #8a8378); }
+html[data-theme="dark"] .g-leaf.l { box-shadow: inset -1px 0 0 var(--line); }
+html[data-theme="dark"] .g-leaf.r { box-shadow: inset 1px 0 0 var(--line); }
+html[data-theme="dark"] .g-blurb { color: var(--ink-2); }
+
+/* ---------- pages ---------- */
+html[data-theme="dark"] .nav-drop { box-shadow: 0 0 0 1px var(--line), 0 24px 50px -20px rgba(0, 0, 0, 0.7); }
+
+html[data-theme="dark"] .wk-filters a:hover,
+html[data-theme="dark"] .chip-hang:hover,
+html[data-theme="dark"] .ab-arrows button:hover,
+html[data-theme="dark"] .ab-tl-btns button:hover:not(:disabled) { background: #2a2724; }
+html[data-theme="dark"] .wk-thumb,
+html[data-theme="dark"] .wk-cell,
+html[data-theme="dark"] .pj-next-img { background: #24211e; }
+html[data-theme="dark"] .wk-cell b { color: #fff; }
+
+html[data-theme="dark"] .pj-quote blockquote { color: var(--ink-2); }
+html[data-theme="dark"] .pj-arrow { box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.8); }
+html[data-theme="dark"] .pj-drawing { background: #e9e5dd; }
+
+html[data-theme="dark"] .ct-form,
+html[data-theme="dark"] .ct-row,
+html[data-theme="dark"] .ct-info { border-color: var(--line); }
+html[data-theme="dark"] .ct-row.two label + label { border-color: var(--line); }
+html[data-theme="dark"] .ct-row input::placeholder,
+html[data-theme="dark"] .ct-row textarea::placeholder { color: var(--ink-4); }
+html[data-theme="dark"] .ct-row input:focus::placeholder,
+html[data-theme="dark"] .ct-row textarea:focus::placeholder { color: #3e3a36; }
+html[data-theme="dark"] .ct-row:focus-within,
+html[data-theme="dark"] .ct-row.two label:focus-within { background: #171614; }
+html[data-theme="dark"] .ct-chip { border-color: #3a3632; }
+html[data-theme="dark"] .ct-chip i { border-color: #5e5953; }
+html[data-theme="dark"] .ct-chip[data-on] { border-color: var(--accent); }
+html[data-theme="dark"] .ct-chip[data-on] i { border-color: #fff; }
+html[data-theme="dark"] .ct-chip:hover { border-color: var(--accent); }
+html[data-theme="dark"] .ct-err { color: #ff8a80; }
+
+html[data-theme="dark"] .jr-list,
+html[data-theme="dark"] .jr-list li { border-color: var(--line); }
+
+html[data-theme="dark"] .chip-hang::before,
+html[data-theme="dark"] .chip-hang::after { background: #5e5953; }
+html[data-theme="dark"] .ft-word { color: #1f1d1a; }
+html[data-theme="dark"] .ft-floor { background: linear-gradient(#1a1816, transparent); border-top-color: var(--line); }
+
+html[data-theme="dark"] .ab-string { background: #4a4540; }
+html[data-theme="dark"] .ab-card { background: var(--chip); box-shadow: 0 30px 30px -22px rgba(0, 0, 0, 0.8); }
+html[data-theme="dark"] .ab-intro { color: var(--ink-2); }
+html[data-theme="dark"] .ab-exp-num { color: #5e5953; }
+html[data-theme="dark"] .ab-exp-bars span { background: var(--line); }
+html[data-theme="dark"] .ab-appr,
+html[data-theme="dark"] .ab-appr-row,
+html[data-theme="dark"] .ab-awards,
+html[data-theme="dark"] .ab-awards li,
+html[data-theme="dark"] .ab-faq,
+html[data-theme="dark"] .ab-faq-row,
+html[data-theme="dark"] .ab-faq-row .a,
+html[data-theme="dark"] .ab-shelf,
+html[data-theme="dark"] .ab-tl-axis,
+html[data-theme="dark"] .ab-tst-foot,
+html[data-theme="dark"] .ab-arrows button,
+html[data-theme="dark"] .ab-tst-tabs,
+html[data-theme="dark"] .ab-tst-tabs button,
+html[data-theme="dark"] .ab-tl-btns button,
+html[data-theme="dark"] .ab-book { border-color: var(--line); }
+html[data-theme="dark"] .ab-old,
+html[data-theme="dark"] .ab-faq-row .q,
+html[data-theme="dark"] .ab-tst-tabs button { color: var(--ink-3); }
+html[data-theme="dark"] .ab-faq-row .dash { color: var(--ink-4); }
+html[data-theme="dark"] .ab-tst { background: var(--chip); }
+html[data-theme="dark"] .ab-tst-tabs button[data-on] { color: var(--ink); background: #171614; }
+html[data-theme="dark"] .ab-tl-axis .tick { background: #3a3632; }
+html[data-theme="dark"] .ab-tl-ev { border-left-color: #3a3632; }
+html[data-theme="dark"] .ab-member .pic { background: #2a2724; }
+
+/* smooth switch between modes, but never on first paint */
+html.theme-anim, html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
+  transition: background-color 0.45s ease, border-color 0.45s ease, color 0.3s ease, box-shadow 0.45s ease !important;
+}

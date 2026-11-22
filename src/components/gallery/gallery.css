@@ -216,7 +216,7 @@
 }
 .g-root[data-ready] .g-cta { opacity: 1; }
 .g-cta:hover::before, .g-cta:focus-visible::before { transform: scaleX(1.08); background: var(--ink); }
-.g-cta:hover, .g-cta:focus-visible { color: #fff; }
+.g-cta:hover, .g-cta:focus-visible { color: var(--on-ink); }
 .g-cta:focus-visible { outline: none; }
 .g-cta-in { display: block; }
 .g-blurb {
@@ -269,7 +269,7 @@
 .g-hud-open:hover span { transform: translateX(4px); }
 .g-hud-end { display: flex; gap: 8px; }
 .g-hud-end a { display: inline-flex; align-items: center; height: 40px; padding: 0 14px; background: var(--accent); color: var(--on-accent); font-size: 14px; font-weight: 600; transition: background-color 0.3s, color 0.3s; }
-.g-hud-end a:hover { background: var(--ink); color: #fff; }
+.g-hud-end a:hover { background: var(--ink); color: var(--on-ink); }
 .g-hud-dots { display: flex; gap: 5px; }
 .g-hud-dots i { width: 6px; height: 6px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 22%, transparent); transition: background-color 0.3s, width 0.4s var(--ease-out); }
 .g-hud-dots i[data-on] { width: 18px; border-radius: 3px; background: var(--accent); }

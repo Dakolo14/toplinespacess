@@ -185,7 +185,7 @@ const css = `
 .pj-quote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--ink-3)}
 .pj-cta{display:inline-flex;align-items:center;gap:10px;margin-top:24px;height:48px;padding:0 22px;background:var(--accent);color:var(--on-accent);font-size:15px;font-weight:600;transition:background-color .3s,color .3s}
 .pj-cta i{font-style:normal;transition:transform .5s var(--ease-out)}
-.pj-cta:hover{background:var(--ink);color:#fff}.pj-cta:hover i{transform:translateX(4px)}
+.pj-cta:hover{background:var(--ink);color:var(--on-ink)}.pj-cta:hover i{transform:translateX(4px)}
 
 .pj-media{position:sticky;top:96px;align-self:start;min-width:0}
 .pj-screen{position:relative;background:#111;box-shadow:0 0 0 8px var(--panel)}
@@ -225,7 +225,7 @@ const css = `
 .pj-next-txt strong{font-size:clamp(36px,4.4vw,64px);font-weight:600;letter-spacing:-.045em;line-height:.95}
 .pj-next-txt small{font-size:14px;color:var(--ink-2);font-weight:500}
 .pj-next-go{margin-top:16px;width:56px;height:56px;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font-size:20px;transition:transform .5s var(--ease-out),background-color .3s,color .3s}
-.pj-next:hover .pj-next-go{transform:translateX(8px);background:var(--ink);color:#fff}
+.pj-next:hover .pj-next-go{transform:translateX(8px);background:var(--ink);color:var(--on-ink)}
 .pj-prev{display:block;max-width:1440px;margin:32px auto 0;font-size:13px;font-weight:600;color:var(--ink-2);transition:color .25s}
 .pj-prev:hover{color:var(--ink)}
 
