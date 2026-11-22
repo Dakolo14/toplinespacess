@@ -47,7 +47,6 @@ export default function Footer() {
         </div>
         <div className="ft-legal">
           <span>© {site.name}</span>
-          <span>{site.addressLines.join(", ")}</span>
         </div>
       </div>
       <style>{css}</style>
