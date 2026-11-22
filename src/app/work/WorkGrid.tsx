@@ -223,7 +223,7 @@ a.wk-row:hover .wk-arrow{opacity:1;transform:none}
 .wk-cell img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease-out)}
 .wk-cell b{position:absolute;left:0;top:0;padding:6px 8px;background:var(--panel);color:#fff;font-size:11px;font-weight:700;transition:background .4s}
 .wk-sheet article:hover .wk-cell img{transform:scale(1.04)}
-.wk-sheet article:hover .wk-cell b{background:var(--accent)}
+.wk-sheet article:hover .wk-cell b{background:var(--accent);color:var(--on-accent)}
 .wk-sheet h2{margin-top:10px;font-size:17px;font-weight:600;letter-spacing:-.035em;line-height:1.1}
 .wk-sheet p{margin-top:3px;font-size:12px;color:var(--ink-3);font-weight:500}
 
@@ -239,7 +239,7 @@ a.wk-row:hover .wk-arrow{opacity:1;transform:none}
 .wk-mrow-h sup{font-size:11px;color:var(--ink-3);margin-left:3px}
 .wk-mrow-nav{display:flex;gap:6px}
 .wk-mrow-nav button{width:40px;height:40px;display:grid;place-items:center;background:var(--chip);font-size:16px;transition:background-color .3s,opacity .3s}
-.wk-mrow-nav button:not(:disabled):hover{background:var(--accent)}
+.wk-mrow-nav button:not(:disabled):hover{background:var(--accent);color:var(--on-accent)}
 .wk-mrow-nav button:disabled{opacity:.35;cursor:default}
 .wk-mrow-track{display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 calc(var(--gutter) * -1);padding:0 var(--gutter);scroll-padding:0 var(--gutter)}
 .wk-mrow-track::-webkit-scrollbar{display:none}
