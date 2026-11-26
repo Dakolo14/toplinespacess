@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
   output: process.env.STATIC_EXPORT ? "export" : undefined,
   trailingSlash: true,
   images: { unoptimized: true },
+  // "Work" was renamed to "Projects": keep old links working (ignored by the static export)
+  async redirects() {
+    return [
+      { source: "/work", destination: "/projects/", permanent: true },
+      { source: "/work/:path*", destination: "/projects/:path*", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

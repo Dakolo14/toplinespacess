@@ -38,7 +38,7 @@ export default config({
             quote: fields.text({ label: "Client quote", multiline: true }),
             quoteBy: fields.text({ label: "Quote by", description: "e.g. “Ada Obi, Producer”" }),
             onHomeGallery: fields.checkbox({ label: "Show in the 3D gallery on the home page", description: "The first nine ticked projects are shown.", defaultValue: false }),
-            slug: fields.text({ label: "Page address (advanced)", description: "Used in the link: /work/<this>. Must match the photo folder slug. Change only if you know why." }),
+            slug: fields.text({ label: "Page address (advanced)", description: "Used in the link: /projects/<this>. Must match the photo folder slug. Change only if you know why." }),
             folder: fields.text({ label: "Desktop photo folder (advanced)", description: "Folder name in “TopLine Spaces Website/projects”." }),
           }),
           {

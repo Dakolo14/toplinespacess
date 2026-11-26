@@ -13,7 +13,7 @@ const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 const LINKS: { label: string; href: string }[] = [
   { label: "Home", href: "/" },
-  { label: "Work", href: "/work" },
+  { label: "Projects", href: "/projects" },
   { label: "About", href: "/about" },
   { label: "Journal", href: "/journal" },
   { label: "Contact", href: "/contact" },
@@ -57,7 +57,7 @@ export default function Nav() {
 
         <nav className="nav-links" aria-label="Main">
           {LINKS.map((l) =>
-            l.href === "/work" ? (
+            l.href === "/projects" ? (
               <div key={l.href} className="nav-item" data-hush={hush || undefined} onPointerEnter={() => setHush(false)} onPointerLeave={() => setHush(false)}>
                 <Link href={l.href} className="nav-link roll-host" data-on={isActive(path, l.href) || undefined} aria-haspopup="true" onClick={done}>
                   <Roll>{l.label}</Roll>
@@ -66,20 +66,20 @@ export default function Nav() {
                 <div className="nav-drop">
                   <ul>
                     <li>
-                      <Link href="/work" className="nav-cat" onPointerEnter={() => setPeek(categories[0].slug)} onClick={done}>
+                      <Link href="/projects" className="nav-cat" onPointerEnter={() => setPeek(categories[0].slug)} onClick={done}>
                         <span>All projects</span><sup>{works.length}</sup>
                       </Link>
                     </li>
                     {categories.map((c) => (
                       <li key={c.slug}>
-                        <Link href={`/work/category/${c.slug}`} className="nav-cat" data-on={peek === c.slug || undefined}
+                        <Link href={`/projects/category/${c.slug}`} className="nav-cat" data-on={peek === c.slug || undefined}
                           onPointerEnter={() => setPeek(c.slug)} onFocus={() => setPeek(c.slug)} onClick={done}>
                           <span>{c.label}</span><sup>{worksIn(c.slug).length}</sup>
                         </Link>
                       </li>
                     ))}
                   </ul>
-                  <Link href={`/work/category/${peek}`} className="nav-peek" onClick={done} tabIndex={-1}>
+                  <Link href={`/projects/category/${peek}`} className="nav-peek" onClick={done} tabIndex={-1}>
                     {categories.map((c) => {
                       const w = worksIn(c.slug)[0];
                       return w ? <img key={c.slug} src={w.thumb} alt="" data-on={peek === c.slug || undefined} loading="lazy" decoding="async" /> : null;
@@ -137,7 +137,7 @@ export default function Nav() {
                 <span className="menu-cats-h">Browse by category</span>
                 <div>
                   {categories.map((c) => (
-                    <Link key={c.slug} href={`/work/category/${c.slug}`} data-on={path === `/work/category/${c.slug}` || undefined}>
+                    <Link key={c.slug} href={`/projects/category/${c.slug}`} data-on={path === `/projects/category/${c.slug}` || undefined}>
                       {c.label}<sup>{worksIn(c.slug).length}</sup>
                     </Link>
                   ))}

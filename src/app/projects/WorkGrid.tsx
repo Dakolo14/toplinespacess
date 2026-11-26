@@ -37,14 +37,14 @@ export default function WorkGrid({ cat = null }: { cat?: string | null }) {
   const open = (e: React.MouseEvent, w: Work, img: HTMLImageElement | null | undefined) => {
     if (e.metaKey || e.ctrlKey || !img) return;
     e.preventDefault();
-    zoomToPage(img, `/work/${w.slug}`, router);
+    zoomToPage(img, `/projects/${w.slug}`, router);
   };
 
   return (
     <section className="wk wrap">
       <header className="pg-head">
         <motion.h1 className="wk-h" key={cat ?? "all"} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE }}>
-          {current ? current.label : "All work"} <span className="wk-count">{list.length} {list.length === 1 ? "build" : "builds"}{current ? "" : ", Lagos and beyond"}</span>
+          {current ? current.label : "All projects"} <span className="wk-count">{list.length} {list.length === 1 ? "build" : "builds"}{current ? "" : ", Lagos and beyond"}</span>
         </motion.h1>
         <div className="wk-view" role="tablist" aria-label="Layout">
           {(["sheet", "index"] as View[]).map((v) => (
@@ -58,9 +58,9 @@ export default function WorkGrid({ cat = null }: { cat?: string | null }) {
 
       <nav className="wk-filters" aria-label="Categories">
         <div className="wk-filters-in">
-          <Link href="/work" scroll={false} data-on={!cat || undefined} aria-current={!cat ? "page" : undefined}>All<sup>{works.length}</sup></Link>
+          <Link href="/projects" scroll={false} data-on={!cat || undefined} aria-current={!cat ? "page" : undefined}>All projects<sup>{works.length}</sup></Link>
           {cats.map((c) => (
-            <Link key={c.slug} href={`/work/category/${c.slug}`} scroll={false} data-on={cat === c.slug || undefined} aria-current={cat === c.slug ? "page" : undefined}>
+            <Link key={c.slug} href={`/projects/category/${c.slug}`} scroll={false} data-on={cat === c.slug || undefined} aria-current={cat === c.slug ? "page" : undefined}>
               {c.label}<sup>{c.n}</sup>
             </Link>
           ))}
@@ -86,7 +86,7 @@ export default function WorkGrid({ cat = null }: { cat?: string | null }) {
             {list.map((w, i) => (
               <motion.div key={w.slug} layout initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                 transition={{ duration: 0.7, ease: EASE, delay: Math.min(i, 12) * 0.035 }}>
-                <Link href={`/work/${w.slug}`} className="wk-row" data-dim={(hover && hover !== w) || undefined}
+                <Link href={`/projects/${w.slug}`} className="wk-row" data-dim={(hover && hover !== w) || undefined}
                   onPointerEnter={() => setHover(w)}
                   onClick={(e) => {
                     const own = (e.currentTarget as HTMLElement).querySelector<HTMLImageElement>(".wk-thumb img");
@@ -121,7 +121,7 @@ export default function WorkGrid({ cat = null }: { cat?: string | null }) {
             {list.map((w, i) => (
               <motion.article key={w.slug} layout initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }}
                 transition={{ duration: 0.7, ease: EASE, delay: Math.min(i, 12) * 0.04 }}>
-                <Link href={`/work/${w.slug}`} onClick={(e) => open(e, w, (e.currentTarget as HTMLElement).querySelector("img"))}>
+                <Link href={`/projects/${w.slug}`} onClick={(e) => open(e, w, (e.currentTarget as HTMLElement).querySelector("img"))}>
                   <div className="wk-cell"><img src={w.thumb} alt={w.title} loading="lazy" /><b>{w.no}</b></div>
                   <h2>{w.title}</h2>
                   <p>{w.services}</p>
@@ -141,7 +141,7 @@ type OpenFn = (e: React.MouseEvent, w: Work, img: HTMLImageElement | null | unde
 
 function Card({ w, onOpen }: { w: Work; onOpen: OpenFn }) {
   return (
-    <Link href={`/work/${w.slug}`} className="wk-card" onClick={(e) => onOpen(e, w, (e.currentTarget as HTMLElement).querySelector("img"))}>
+    <Link href={`/projects/${w.slug}`} className="wk-card" onClick={(e) => onOpen(e, w, (e.currentTarget as HTMLElement).querySelector("img"))}>
       <span className="wk-cell"><img src={w.thumb} alt={w.title} loading="lazy" /><b>{w.no}</b></span>
       <strong>{w.title}</strong>
       <span>{w.services}</span>
@@ -162,7 +162,7 @@ function Row({ title, slug, items, onOpen }: { title: string; slug: string; item
   return (
     <section className="wk-mrow">
       <header>
-        <Link href={`/work/category/${slug}`} className="wk-mrow-h">{title}<sup>{items.length}</sup></Link>
+        <Link href={`/projects/category/${slug}`} className="wk-mrow-h">{title}<sup>{items.length}</sup></Link>
         <span className="wk-mrow-nav">
           <button aria-label={`Previous in ${title}`} disabled={edge.start} onClick={() => go(-1)}>←</button>
           <button aria-label={`Next in ${title}`} disabled={edge.end} onClick={() => go(1)}>→</button>
@@ -170,7 +170,7 @@ function Row({ title, slug, items, onOpen }: { title: string; slug: string; item
       </header>
       <div className="wk-mrow-track" ref={ref} onScroll={sync}>
         {items.map((w) => <Card key={w.slug} w={w} onOpen={onOpen} />)}
-        <Link href={`/work/category/${slug}`} className="wk-card wk-card-all"><span>See all {title}</span><i>→</i></Link>
+        <Link href={`/projects/category/${slug}`} className="wk-card wk-card-all"><span>See all {title}</span><i>→</i></Link>
       </div>
     </section>
   );
@@ -183,9 +183,9 @@ const css = `
 .wk-count{margin-left:10px;font-weight:500;color:var(--ink-3)}
 .wk-view{display:flex;padding:3px;background:var(--chip);border-radius:999px}
 .wk-view button{position:relative;padding:7px 14px;white-space:nowrap;font-size:12px;font-weight:600;color:var(--ink-3);transition:color .3s}
-.wk-view button[data-on]{color:var(--on-ink)}
+.wk-view button[data-on]{color:var(--on-accent)}
 .wk-view button span{position:relative}
-.wk-view .pill-bg{position:absolute;inset:0;border-radius:999px;background:var(--ink)}
+.wk-view .pill-bg{position:absolute;inset:0;border-radius:999px;background:var(--accent)}
 .wk-filters{position:sticky;top:78px;z-index:30;margin:0 calc(var(--gutter) * -1) 28px;padding:8px var(--gutter);background:color-mix(in srgb,var(--bg) 94%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .wk-filters-in{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
 .wk-filters-in::-webkit-scrollbar{display:none}
