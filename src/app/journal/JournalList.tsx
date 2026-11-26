@@ -114,9 +114,9 @@ const css = `
 .jr-head-end{display:flex;align-items:center;gap:20px}
 .jr-view{display:flex;padding:3px;background:var(--chip);border-radius:999px}
 .jr-view button{position:relative;padding:7px 14px;white-space:nowrap;font-size:12px;font-weight:600;color:var(--ink-3);transition:color .3s}
-.jr-view button[data-on]{color:var(--on-ink)}
+.jr-view button[data-on]{color:var(--on-accent)}
 .jr-view button span{position:relative}
-.jr-view .pill-bg{position:absolute;inset:0;border-radius:999px;background:var(--ink)}
+.jr-view .pill-bg{position:absolute;inset:0;border-radius:999px;background:var(--accent)}
 .jr-sheet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 20px;margin-left:24px;margin-bottom:40px}
 .jr-sheet a{display:block}
 .jr-cell{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--chip)}

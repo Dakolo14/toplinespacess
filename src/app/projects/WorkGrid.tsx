@@ -183,9 +183,9 @@ const css = `
 .wk-count{margin-left:10px;font-weight:500;color:var(--ink-3)}
 .wk-view{display:flex;padding:3px;background:var(--chip);border-radius:999px}
 .wk-view button{position:relative;padding:7px 14px;white-space:nowrap;font-size:12px;font-weight:600;color:var(--ink-3);transition:color .3s}
-.wk-view button[data-on]{color:var(--on-ink)}
+.wk-view button[data-on]{color:var(--on-accent)}
 .wk-view button span{position:relative}
-.wk-view .pill-bg{position:absolute;inset:0;border-radius:999px;background:var(--ink)}
+.wk-view .pill-bg{position:absolute;inset:0;border-radius:999px;background:var(--accent)}
 .wk-filters{position:sticky;top:78px;z-index:30;margin:0 calc(var(--gutter) * -1) 28px;padding:8px var(--gutter);background:color-mix(in srgb,var(--bg) 94%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .wk-filters-in{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
 .wk-filters-in::-webkit-scrollbar{display:none}
