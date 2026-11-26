@@ -9,7 +9,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ cat: string }> }) {
   const { cat } = await params;
   const c = categories.find((x) => x.slug === cat);
-  return { title: c ? `${c.label} · TopLine Spaces` : "Work · TopLine Spaces" };
+  return { title: c ? `${c.label} · TopLine Spaces` : "Projects · TopLine Spaces" };
 }
 export default async function CategoryPage({ params }: { params: Promise<{ cat: string }> }) {
   const { cat } = await params;

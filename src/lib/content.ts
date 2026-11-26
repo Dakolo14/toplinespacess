@@ -30,7 +30,7 @@ export const site = {
     cta: "Walk in",
   },
   nav: [
-    { label: "Work", href: "/work" },
+    { label: "Projects", href: "/projects" },
     { label: "About", href: "/about" },
     { label: "Journal", href: "/journal" },
     { label: "Contact", href: "/contact" },

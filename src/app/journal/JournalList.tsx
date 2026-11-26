@@ -10,16 +10,16 @@ const VIEW_KEY = "topline-journal-view";
 const cover = (i: number) => works[(i * 3 + 1) % works.length];
 
 export default function JournalList() {
-  const [cat, setCat] = useState("All");
+  const [cat, setCat] = useState("All projects");
   const [hover, setHover] = useState(-1);
   const [view, setView] = useState<View>("sheet");
   useEffect(() => {
     try { const v = sessionStorage.getItem(VIEW_KEY); if (v === "sheet" || v === "list") setView(v); } catch {}
   }, []);
   const pick = (v: View) => { setView(v); setHover(-1); try { sessionStorage.setItem(VIEW_KEY, v); } catch {} };
-  const cats = ["All", ...Array.from(new Set(journal.map((j) => j.cat)))];
-  const count = (c: string) => (c === "All" ? journal.length : journal.filter((j) => j.cat === c).length);
-  const list = journal.filter((j) => cat === "All" || j.cat === cat);
+  const cats = ["All projects", ...Array.from(new Set(journal.map((j) => j.cat)))];
+  const count = (c: string) => (c === "All projects" ? journal.length : journal.filter((j) => j.cat === c).length);
+  const list = journal.filter((j) => cat === "All projects" || j.cat === cat);
   const x = useMotionValue(0), y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 260, damping: 28 }), sy = useSpring(y, { stiffness: 260, damping: 28 });
   return (

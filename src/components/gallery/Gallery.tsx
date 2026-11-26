@@ -9,7 +9,7 @@ import "./gallery.css";
 
 type Phase = "intro" | "entering" | "inside" | "leaving";
 const DOORS = [
-  { label: "All work", href: "/work" },
+  { label: "All projects", href: "/projects" },
   { label: "About us", href: "/about" },
 ];
 const KEY_IN = "topline-gallery-inside";
@@ -363,8 +363,8 @@ export default function Gallery() {
 
   const openWork = (w: Work, el: HTMLElement | null) => {
     const img = el?.querySelector("img");
-    if (img) zoomToPage(img, `/work/${w.slug}`, router);
-    else router.push(`/work/${w.slug}`);
+    if (img) zoomToPage(img, `/projects/${w.slug}`, router);
+    else router.push(`/projects/${w.slug}`);
   };
 
   return (
@@ -392,7 +392,7 @@ export default function Gallery() {
         </button>
         <p className="g-blurb">{site.intro.blurb}</p>
       </div>
-      {L && <Hud L={L} works={works} at={hud} show={phase === "inside"} ctl={ctl} onOpen={(w) => router.push(`/work/${w.slug}`)} />}
+      {L && <Hud L={L} works={works} at={hud} show={phase === "inside"} ctl={ctl} onOpen={(w) => router.push(`/projects/${w.slug}`)} />}
       {/* pointermove as well as enter: if the page loads with the cursor already over the doors,
           no enter event ever fires, and the doors would never open on hover */}
       <div className="g-hit" onClick={enter} onPointerEnter={(e) => e.pointerType === "mouse" && setAjar(true)} onPointerMove={(e) => e.pointerType === "mouse" && setAjar(true)} onPointerLeave={() => setAjar(false)} />
@@ -621,7 +621,7 @@ function Hud({ L, works, at, show, ctl, onOpen }: {
               <strong>{w.title}</strong><span>Open project →</span>
             </button>
           ) : (
-            <span className="g-hud-end"><Link href="/work/">All work</Link><Link href="/about/">About us</Link></span>
+            <span className="g-hud-end"><Link href="/projects/">All projects</Link><Link href="/about/">About us</Link></span>
           )}
         </div>
         <button className="g-hud-arr" onClick={() => ctl.current?.step(1)} disabled={i >= last} aria-label="Next project" tabIndex={show ? 0 : -1}>→</button>

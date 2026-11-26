@@ -17,7 +17,7 @@ export default function Footer() {
         <Lines as="h2" className="ft-h display" lines={["Tell us what", "you’re making."]} />
         <div className="ft-side">
           <div className="ft-chips">
-            <Link href={site.bookCallHref} className="chip-hang roll-host"><Roll>Book a call</Roll><span className="arr">→</span></Link>
+            <Link href={site.bookCallHref} className="chip-hang is-cta roll-host"><Roll>Book a call</Roll><span className="arr">→</span></Link>
             <a href={`mailto:${site.email}`} className="chip-hang roll-host"><Roll>{site.email}</Roll><span className="arr">→</span></a>
           </div>
           <nav className="ft-nav">
@@ -65,6 +65,8 @@ const css = `
 .chip-hang::before{left:12px}.chip-hang::after{right:12px}
 .chip-hang:hover{background:#e9e4e4}
 .chip-hang:hover::before{transform:rotate(-8deg)}.chip-hang:hover::after{transform:rotate(8deg)}
+html .ft .chip-hang.is-cta{background:var(--accent);color:var(--on-accent)}
+html .ft .chip-hang.is-cta:hover{background:var(--accent-deep);color:var(--on-accent)}
 .chip-hang .arr{transition:transform .5s var(--ease-out)}
 .chip-hang:hover .arr{transform:translateX(3px)}
 .ft-nav{display:flex;gap:22px;font-size:14px;font-weight:500}

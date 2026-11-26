@@ -17,7 +17,7 @@ export default function Project({ work, prev, next }: { work: Work; prev: Work; 
   const slides: { src: string; video?: boolean }[] = work.images.map((src) => ({ src }));
   if (work.video) slides.splice(Math.min(1, slides.length), 0, { src: work.video, video: true });
   const drawing = work.image.endsWith(".svg"); // placeholder elevation drawing until photos arrive
-  const close = () => (window.history.length > 1 ? router.back() : router.push("/work"));
+  const close = () => (window.history.length > 1 ? router.back() : router.push("/projects"));
 
   const zoom = (e: React.MouseEvent, href: string) => {
     if (e.metaKey || e.ctrlKey) return;
@@ -34,8 +34,8 @@ export default function Project({ work, prev, next }: { work: Work; prev: Work; 
       <div className="pj-grid">
         <div className="pj-text">
           <Fade className="pj-crumbs" y={8}>
-            <Link href="/work">Work</Link><i>/</i>
-            <Link href={`/work/category/${work.category}`}>{categoryLabel(work.category)}</Link>
+            <Link href="/projects">Projects</Link><i>/</i>
+            <Link href={`/projects/category/${work.category}`}>{categoryLabel(work.category)}</Link>
           </Fade>
           <Lines as="h1" className="pj-title display" lines={[work.title]} />
           <Fade delay={0.12}>
@@ -73,9 +73,9 @@ export default function Project({ work, prev, next }: { work: Work; prev: Work; 
       <nav className="pj-more" aria-label="More projects">
         <div className="pj-more-head">
           <span>Keep looking</span>
-          <Link href={`/work/category/${work.category}`}>More {categoryLabel(work.category)} →</Link>
+          <Link href={`/projects/category/${work.category}`}>More {categoryLabel(work.category)} →</Link>
         </div>
-        <Link href={`/work/${next.slug}`} className="pj-next" onClick={(e) => zoom(e, `/work/${next.slug}`)}>
+        <Link href={`/projects/${next.slug}`} className="pj-next" onClick={(e) => zoom(e, `/projects/${next.slug}`)}>
           <span className="pj-next-img"><img src={next.thumb} alt="" loading="lazy" /></span>
           <span className="pj-next-txt">
             <em>Next project</em>
@@ -84,7 +84,7 @@ export default function Project({ work, prev, next }: { work: Work; prev: Work; 
             <b className="pj-next-go" aria-hidden>→</b>
           </span>
         </Link>
-        <Link href={`/work/${prev.slug}`} className="pj-prev">← Previous: {prev.title}</Link>
+        <Link href={`/projects/${prev.slug}`} className="pj-prev">← Previous: {prev.title}</Link>
       </nav>
       <style>{css}</style>
     </main>

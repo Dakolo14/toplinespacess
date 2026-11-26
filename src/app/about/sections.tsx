@@ -179,7 +179,7 @@ export function Clients() {
             initial={{ y: 60, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 120, damping: 14, delay: i * 0.06 }}
             whileHover={{ y: -18, rotate: i % 2 ? 2 : -2 }}>
-            <Link href={`/work/${c.slug}`} className="ab-book-link" aria-label={`${c.name} — ${c.year}`}>
+            <Link href={`/projects/${c.slug}`} className="ab-book-link" aria-label={`${c.name} — ${c.year}`}>
               <span className="yr">{c.year}</span>
               <span className="nm">{c.name}</span>
             </Link>
@@ -274,7 +274,7 @@ export function Awards() {
   const rot = useTransform(sx, (v) => (half.current ? Math.max(-8, Math.min(8, (v - half.current) / 60)) : 0));
   return (
     <section className="ab-sec wrap ab-split" onPointerMove={(e) => { x.set(e.clientX); y.set(e.clientY); }}>
-      <div><Fade className="ab-kick">Point at a prize to see the work it was for.</Fade><Lines as="h2" className="ab-title" lines={["Awards"]} /></div>
+      <div><Fade className="ab-kick">Point at a prize to see the project it was for.</Fade><Lines as="h2" className="ab-title" lines={["Awards"]} /></div>
       <ul className="ab-awards" onPointerLeave={() => setHover(-1)}>
         {about.awards.map((a, i) => (
           <Fade key={i} delay={i * 0.04}>
