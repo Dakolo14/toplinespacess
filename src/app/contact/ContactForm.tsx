@@ -109,7 +109,8 @@ export default function ContactForm() {
       </Fade>
       <div className="ct-info">
         <Fade><span className="label">Write to us</span><a href={`mailto:${site.email}`}>{site.email}</a></Fade>
-        <Fade delay={0.05}><span className="label">Hours</span><span>{site.hoursLong}</span><Clock /></Fade>
+        <Fade delay={0.05}><span className="label">Call us</span>{site.phones.map((n) => <a key={n} href={`tel:${n.replace(/[^+\d]/g, "")}`}>{n}</a>)}</Fade>
+        <Fade delay={0.1}><span className="label">Hours</span><span>{site.hoursLong}</span><Clock /></Fade>
       </div>
       <style>{css}</style>
     </section>
@@ -164,7 +165,7 @@ const css = `
 .ct-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .ct-err{color:#b3261e}.ct-err a{text-decoration:underline}
 .ct-form{position:relative}
-.ct-info{display:grid;grid-template-columns:repeat(2,1fr);margin-top:60px;padding-top:28px;border-top:1px solid #e3e3e3;font-size:13px;font-weight:600}
+.ct-info{display:grid;grid-template-columns:repeat(3,1fr);margin-top:60px;padding-top:28px;border-top:1px solid #e3e3e3;font-size:13px;font-weight:600}
 .ct-info>div{display:flex;flex-direction:column;gap:8px}
 .ct-clock{display:flex;align-items:center;gap:8px;font-weight:500}
 .ct-clock i{width:6px;height:6px;border-radius:50%;border:1px solid var(--accent)}

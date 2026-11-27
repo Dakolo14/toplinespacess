@@ -10,6 +10,7 @@ export const site = {
   // Drop the logo file into /public (e.g. /public/logo.svg) and set its path here. Empty = placeholder mark.
   logo: "",
   email: "info@toplinespaces.com",
+  phones: ["+234 706 298 5865", "+234 808 462 1004"],
   hours: "Monday to Friday",
   hoursLong: "Monday to Friday, 09:00 to 18:00", // PLACEHOLDER
   addressLines: [] as string[], // street address hidden until the studio wants it public
@@ -131,7 +132,18 @@ export const galleryWorks = works.filter((w) => w.onHomeGallery).slice(0, 9);
 
 export const about = {
   hangingWords: ["We", "Build", "Rooms", "People", "Remember", "Seeing"],
-  intro: "TopLine Spaces, a Lagos set and space builder. TV studios, stages, red carpets, kiosks and brand spaces, designed and built in-house.",
+  intro: "At TopLine Spaces, we believe every space has a story to tell.",
+  who: {
+    lead: "At TopLine Spaces, we believe every space has a story to tell. Our passion lies in transforming ideas into thoughtfully designed, visually compelling environments that inspire, engage and leave lasting impressions.",
+    paragraphs: [
+      "We are a creative set design and production company dedicated to bringing concepts to life through innovative design, meticulous planning and exceptional craftsmanship. From conceptualisation to execution, we combine creativity, technical expertise and attention to detail to deliver spaces that are as functional as they are visually striking.",
+      "Whether it’s a brand activation, an event, a television set, a commercial installation or a bespoke interior experience, we approach every project with a fresh perspective and a commitment to excellence.",
+      "Our process is collaborative and intentional. We work closely with our clients to understand their vision, translate their ideas into impactful designs and deliver results that reflect their unique identity and objectives.",
+      "At TopLine Spaces, we don’t just design spaces. We create environments that connect people, communicate stories and bring experiences to life.",
+    ],
+    tagline: ["Your vision.", "Our creativity.", "Extraordinary spaces."],
+    vision: "Our vision is to become a leading creative design and production company, recognised for transforming bold ideas into exceptional spaces and unforgettable experiences.",
+  },
   expertise: [
     { title: "TV & Studio Sets", text: "Talk show, news and entertainment sets, designed for the lens first and built to take daily broadcast.", tags: "Set design, fabrication, set dressing, LED integration" },
     { title: "Stages & Shows", text: "Concert, pageant and festival stages, from the first sketch to the last screw on show night.", tags: "Stage design, runways, staging, rigging coordination" },
