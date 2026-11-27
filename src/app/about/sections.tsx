@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
-import { about, works } from "@/lib/content";
+import { about, site, works } from "@/lib/content";
 import { Fade, Lines } from "@/components/ui/Reveal";
 import "./about.css";
 
@@ -14,6 +14,31 @@ function Head({ kicker, title }: { kicker: string; title: string }) {
       <Fade className="ab-kick">{kicker}</Fade>
       <Lines as="h2" className="ab-title" lines={[title]} />
     </div>
+  );
+}
+
+const tel = (n: string) => `tel:${n.replace(/[^+\d]/g, "")}`;
+
+/* About us: who the studio is, the promise and the vision */
+export function Who() {
+  const w = about.who;
+  return (
+    <section className="ab-sec wrap ab-split ab-who">
+      <div><Fade className="ab-kick">Who we are</Fade><Lines as="h2" className="ab-title" lines={["About us"]} /></div>
+      <div className="ab-who-body">
+        <Fade><p className="ab-who-lead">{w.lead}</p></Fade>
+        <div className="ab-who-cols">
+          {w.paragraphs.map((p, i) => <Fade key={i} delay={0.05 * i}><p>{p}</p></Fade>)}
+        </div>
+        <Lines as="p" className="ab-who-tag" lines={w.tagline} />
+        <div className="ab-who-foot">
+          <Fade className="ab-who-vision"><span className="ab-kick">Our vision</span><p>{w.vision}</p></Fade>
+          <Fade delay={0.08} className="ab-who-call"><span className="ab-kick">Call us</span>
+            {site.phones.map((n) => <a key={n} href={tel(n)}>{n}</a>)}
+          </Fade>
+        </div>
+      </div>
+    </section>
   );
 }
 
